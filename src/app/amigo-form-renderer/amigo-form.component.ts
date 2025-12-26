@@ -1,7 +1,9 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  NgZone,
   OnChanges,
   Output,
   SimpleChanges,
@@ -12,7 +14,6 @@ import {
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
 
 import { FormSchema, FormFieldSchema, FormType } from './models';
 import { AmigoFormService } from './amigo-form.service';
@@ -44,7 +45,11 @@ export class AmigoFormComponent implements OnChanges {
   isSubmitHovered = false;
   isCancelHovered = false;
 
-  constructor(private formService: AmigoFormService) {}
+  constructor(
+    private formService: AmigoFormService,
+    private zone: NgZone,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['schema'] || changes['formId']) {
@@ -55,29 +60,42 @@ export class AmigoFormComponent implements OnChanges {
   private init(): void {
     this.loadError = null;
 
+    // If schema is provided directly
     if (this.schema) {
       this.applySchema(this.schema as any);
       return;
     }
 
+    // If neither schema nor formId
     if (!this.formId) {
       this.resolvedSchema = null;
       this.form = null;
       this.loadError = 'No schema or formId provided.';
+      this.cdr.detectChanges();
       return;
     }
 
+    // Start loading
     this.isLoading = true;
-    this.formService
-      .getFormSchemaById(this.formId)
-      .pipe(finalize(() => (this.isLoading = false)))
-      .subscribe({
-        next: (res: any) => {
+    this.cdr.detectChanges(); //  ensure UI shows loading immediately
+
+    this.formService.getFormSchemaById(this.formId).subscribe({
+      next: (res: any) => {
+        //  force inside Angular CD context to update UI
+        this.zone.run(() => {
           this.applySchema(res?.form_data ?? res);
-        },
-        error: (e) =>
-          (this.loadError = e?.message ?? 'Failed to load form schema'),
-      });
+          this.isLoading = false;
+          this.cdr.detectChanges(); //  render immediately
+        });
+      },
+      error: (e) => {
+        this.zone.run(() => {
+          this.isLoading = false;
+          this.loadError = e?.message ?? 'Failed to load form schema';
+          this.cdr.detectChanges();
+        });
+      },
+    });
   }
 
   private applySchema(raw: any): void {
@@ -87,8 +105,7 @@ export class AmigoFormComponent implements OnChanges {
 
     // normalize file accept tokens in schema
     const fields = (s?.fields ?? []).map((f: any) => {
-      if (f?.type === 'file')
-        return { ...f, accept: normalizeAccept(f.accept) };
+      if (f?.type === 'file') return { ...f, accept: normalizeAccept(f.accept) };
       return f;
     });
 
@@ -106,6 +123,8 @@ export class AmigoFormComponent implements OnChanges {
 
     this.activeStepIndex = 0;
     this.form = buildFormGroup(this.resolvedSchema!.fields, this.initialValue);
+
+    this.cdr.detectChanges(); // ✅ ensures template updates immediately
   }
 
   // ---------- info cards ----------
@@ -229,9 +248,7 @@ export class AmigoFormComponent implements OnChanges {
 
   get orderedSteps() {
     const s = this.resolvedSchema;
-    return [...(s?.steps ?? [])].sort(
-      (a, b) => (a?.order ?? 0) - (b?.order ?? 0)
-    );
+    return [...(s?.steps ?? [])].sort((a, b) => (a?.order ?? 0) - (b?.order ?? 0));
   }
 
   get totalSteps(): number {
@@ -263,16 +280,11 @@ export class AmigoFormComponent implements OnChanges {
   get orderedSections() {
     const s = this.resolvedSchema;
     if (!s || s.formType !== 'single-sectional') return [];
-    return [...(s.sections ?? [])].sort(
-      (a, b) => (a?.order ?? 0) - (b?.order ?? 0)
-    );
+    return [...(s.sections ?? [])].sort((a, b) => (a?.order ?? 0) - (b?.order ?? 0));
   }
 
   get isSectional(): boolean {
-    return (
-      this.resolvedSchema?.formType === 'single-sectional' &&
-      this.orderedSections.length > 0
-    );
+    return this.resolvedSchema?.formType === 'single-sectional' && this.orderedSections.length > 0;
   }
 
   fieldsForSection(sectionId: string): FormFieldSchema[] {
@@ -305,10 +317,7 @@ export class AmigoFormComponent implements OnChanges {
     this.touchFields(current);
     if (this.hasErrors(current)) return;
 
-    this.activeStepIndex = Math.min(
-      this.totalSteps - 1,
-      this.activeStepIndex + 1
-    );
+    this.activeStepIndex = Math.min(this.totalSteps - 1, this.activeStepIndex + 1);
   }
 
   submit(): void {

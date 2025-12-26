@@ -13,7 +13,6 @@ export class LoginScreen implements OnInit {
   selectedRole = 'Citizen';
 
   roles = ['Citizen', 'NOC Holder', 'Tanker Supplier', 'Rig Owner'];
-  formId = '8724ee6f-7fd5-4c8e-aac4-883134d1712f';
 
   constructor(private fb: FormBuilder) {}
 
