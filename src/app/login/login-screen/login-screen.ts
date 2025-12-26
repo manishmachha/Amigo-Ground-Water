@@ -13,15 +13,13 @@ export class LoginScreen implements OnInit {
   selectedRole = 'Citizen';
 
   roles = ['Citizen', 'NOC Holder', 'Tanker Supplier', 'Rig Owner'];
+  formId = '8724ee6f-7fd5-4c8e-aac4-883134d1712f';
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      mobile: [
-        '',
-        [Validators.required, Validators.pattern(/^[0-9]{10}$/)]
-      ],
+      mobile: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       otp: [''],
     });
   }
@@ -33,10 +31,7 @@ export class LoginScreen implements OnInit {
     }
 
     this.otpSent = true;
-    this.loginForm.get('otp')?.setValidators([
-      Validators.required,
-      Validators.pattern(/^\d{6}$/),
-    ]);
+    this.loginForm.get('otp')?.setValidators([Validators.required, Validators.pattern(/^\d{6}$/)]);
     this.loginForm.get('otp')?.updateValueAndValidity();
   }
 

@@ -6,6 +6,7 @@ import { LoginScreen } from './login-screen/login-screen';
 import { RegisterScreen } from './register-screen/register-screen';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserloginScreen } from './userlogin-screen/userlogin-screen';
+import { AmigoFormComponent } from '../amigo-form-renderer/amigo-form.component';
 
 
 @NgModule({
@@ -17,7 +18,7 @@ import { UserloginScreen } from './userlogin-screen/userlogin-screen';
   imports: [
     CommonModule,
     LoginRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,AmigoFormComponent
   ]
 })
 export class LoginModule { }
