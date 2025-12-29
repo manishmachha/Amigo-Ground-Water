@@ -8,10 +8,22 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { TokenInterceptor } from './interceptors/TokenInterceptor';
 import { LoaderInterceptor } from './interceptors/LoaderInterceptor';
 import { provideAmigoForm } from './amigo-form-renderer/config';
+import { CommonModule } from '@angular/common';
+import { PublicHome } from './public-home/public-home';
+import { CitizenPortal } from './citizen-portal/citizen-portal';
+import { WellRegister } from './well-register/well-register';
+import { AmigoFormComponent } from './amigo-form-renderer/amigo-form.component';
+
 
 @NgModule({
-  declarations: [App],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
+  declarations: [App, PublicHome, CitizenPortal, WellRegister],
+  imports: [BrowserModule,
+     AppRoutingModule,
+      FormsModule,
+      ReactiveFormsModule,
+      CommonModule,
+      AmigoFormComponent
+    ],
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptorsFromDi()),

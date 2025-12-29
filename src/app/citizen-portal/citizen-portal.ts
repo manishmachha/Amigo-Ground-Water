@@ -1,0 +1,106 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-citizen-portal',
+  standalone: false,
+  templateUrl: './citizen-portal.html',
+  styleUrl: './citizen-portal.css',
+})
+export class CitizenPortal {
+searchText = '';
+
+  actions = [
+    {
+      title: 'Apply for NOC',
+      icon: 'bi-file-earmark-text',
+      bg: 'bg-blue-500'
+    },
+    {
+      title: 'Register Well',
+      icon: 'bi-droplet',
+      bg: 'bg-cyan-500'
+    },
+    {
+      title: 'Report Violation',
+      icon: 'bi-exclamation-triangle',
+      bg: 'bg-orange-500'
+    },
+    {
+      title: 'Submit Grievance',
+      icon: 'bi-chat-dots',
+      bg: 'bg-purple-500'
+    }
+  ];
+
+applications = [
+  {
+    title: 'NOC Application',
+    appId: 'APP-NOC-2024-1234',
+    submittedOn: '15/1/2024',
+    stage: 'Technical Review',
+    status: 'Under Review',
+    statusColor: 'bg-yellow-100 text-yellow-700 border-yellow-300',
+    icon: 'bi-clock'
+  },
+  {
+    title: 'Well Registration',
+    appId: 'APP-WELL-2023-8765',
+    submittedOn: '20/12/2023',
+    stage: 'Completed',
+    status: 'Approved',
+    statusColor: 'bg-green-100 text-green-700 border-green-300',
+    icon: 'bi-check-circle'
+  }
+];
+
+notifications = [
+  {
+    message: 'Your NOC application is under technical review',
+    time: '2 hours ago'
+  },
+  {
+    message: 'Document verification completed successfully',
+    time: '1 day ago'
+  },
+  {
+    message: 'Please submit missing documents for application APP-NOC-2024-1234',
+    time: '2 days ago'
+  }
+];
+
+grievances = [
+  {
+    title: 'Unauthorized Well Near Property',
+    refId: 'GRV-2024-0567',
+    submittedOn: '20/1/2024',
+    status: 'In Progress',
+    statusClass: 'bg-blue-100 text-blue-700 border-blue-300',
+    icon: 'bi-clock'
+  },
+  {
+    title: 'Application Processing Delay',
+    refId: 'GRV-2023-9876',
+    submittedOn: '10/11/2023',
+    status: 'Resolved',
+    statusClass: 'bg-green-100 text-green-700 border-green-300',
+    icon: 'bi-check-circle'
+  }
+];
+
+documents = [
+  {
+    name: 'NOC Application Form',
+    date: 'Uploaded · 15/1/2024'
+  },
+  {
+    name: 'Well Registration Certificate',
+    date: 'Issued · 25/12/2023'
+  },
+  {
+    name: 'Property Documents',
+    date: 'Uploaded · 14/1/2024'
+  }
+];
+
+
+}
