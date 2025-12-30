@@ -5,14 +5,12 @@ import { RegisterScreen } from './register-screen/register-screen';
 import { UserloginScreen } from './userlogin-screen/userlogin-screen';
 
 const routes: Routes = [
-  { path: 'register-screen', component: RegisterScreen },
-    { path: 'login-screen', component: LoginScreen },
-    { path: 'user-login', component: UserloginScreen}
-
+  { path: 'register', component: RegisterScreen },
+  { path: 'login', component: LoginScreen },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class LoginRoutingModule { }
+export class LoginRoutingModule {}

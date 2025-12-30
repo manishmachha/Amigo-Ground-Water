@@ -1,1 +1,2 @@
-<amigo-form [formId]="formId"></amigo-form>
+<amigo-form [formId]="formId" (submitted)="onFormSubmitted($event)"
+  (submitFailed)="onFormSubmitFailed($event)"></amigo-form>
