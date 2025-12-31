@@ -8,10 +8,10 @@ type LoginMode = 'password' | 'otp';
 @Component({
   selector: 'app-userlogin-screen',
   standalone: false,
-  templateUrl: './userlogin-screen.html',
-  styleUrl: './userlogin-screen.css',
+  templateUrl: './userlogin.html',
+  styleUrl: './userlogin.css',
 })
-export class UserloginScreen {
+export class Userlogin {
 
   constructor(private authService: AuthService, private router: Router) { }
 
