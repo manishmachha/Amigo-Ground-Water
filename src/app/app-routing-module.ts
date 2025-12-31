@@ -8,11 +8,14 @@ import { Dashboard } from './dashboard/dashboard';
 import { NocPermissions } from './noc-permissions/noc-permissions';
 import { MonitoringCompliance } from './monitoring-compliance/monitoring-compliance';
 import { EnforcementViolations } from './enforcement-violations/enforcement-violations';
+import { WellsAssets } from './wells-assets/wells-assets';
+import { ReportViolation } from './report-violation/report-violation';
+import { ApplyNoc } from './apply-noc/apply-noc';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login-signup', pathMatch: 'full' },
   { path: 'l', redirectTo: '/login/login-screen', pathMatch: 'full' },
-  { path: 'login-signup', component:LoginSignupComponent },
+  { path: 'login-signup', component: LoginSignupComponent },
 
   {
     path: 'login',
@@ -26,10 +29,24 @@ const routes: Routes = [
   {path:'noc', component:NocPermissions},
   {path:'monitoring-compliance', component:MonitoringCompliance},
   {path: 'enforcement-violations', component:EnforcementViolations}
+  { path: 'public-home', component: PublicHome },
+  { path: 'citizen-portal', component: CitizenPortal },
+  { path: 'well-register', component: WellRegister },
+  { path: 'wells-assets', component: WellsAssets },
+  { path: 'report-voilation', component: ReportViolation},
+  { path: 'apply-noc', component: ApplyNoc},
+  {
+    path: 'rig-management',
+    loadChildren: () => import('./rig-management-module/rig-management-module-module').then((m) => m.RigManagementModuleModule),
+  },
+   {
+    path: 'tanker-bulk-supply',
+    loadChildren: () => import('./tanker-bulk-supply-module/tanker-bulk-supply-module-module').then((m) => m.TankerBulkSupplyModuleModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

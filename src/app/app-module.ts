@@ -49,6 +49,22 @@ import { EnforcementViolations } from './enforcement-violations/enforcement-viol
       
       
     ],
+import { ReportViolation } from './report-violation/report-violation';
+import { WellsAssets } from './wells-assets/wells-assets';
+import { ApplyNoc } from './apply-noc/apply-noc';
+
+
+@NgModule({
+  declarations: [App, PublicHome, CitizenPortal, WellRegister, ReportViolation, WellsAssets, ApplyNoc],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    AmigoFormComponent,
+    
+  ],
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptorsFromDi()),
@@ -60,7 +76,7 @@ import { EnforcementViolations } from './enforcement-violations/enforcement-viol
       {
         apiBaseUrl: 'http://3.6.68.94/services/form-builder/forms',
         // endpoints: {
-        //   getFormById: (id) =>`/services/form-builder/forms/${id}`,
+        //   getFormById: (id) => `/services/form-builder/forms/${id}`,
         // },
       },
       () => sessionStorage.getItem('authToken') // OR: () => inject(AuthService).getAuthToken()
