@@ -1,5 +1,5 @@
 import { AfterViewInit, ViewChild,Component } from '@angular/core';
-import Chart from 'chart.js/auto';
+// import Chart from 'chart.js/auto';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
@@ -10,15 +10,15 @@ import { MatSort } from '@angular/material/sort';
   templateUrl: './monitoring-compliance.html',
   styleUrl: './monitoring-compliance.css',
 })
-export class MonitoringCompliance implements AfterViewInit {
+export class MonitoringCompliance {
 
 
 
- ngAfterViewInit(): void {
-    this.loadWaterLevelTrendChart();
-    this.loadDistrictComplianceChart();
-    this.alertsDataSource.sort = this.sort;
-  }
+//  ngAfterViewInit(): void {
+//     this.loadWaterLevelTrendChart();
+//     this.loadDistrictComplianceChart();
+//     this.alertsDataSource.sort = this.sort;
+//   }
   @ViewChild(MatSort) sort!: MatSort;
 
 
@@ -92,109 +92,109 @@ export class MonitoringCompliance implements AfterViewInit {
     };
   }
 
-  loadWaterLevelTrendChart() {
-    new Chart('waterLevelTrendChart', {
-      type: 'line',
-      data: {
-        labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [
-          {
-            label: 'Average',
-            data: [12.4, 11.7, 10.1, 9.5, 8.7, 9.2],
-            borderColor: '#2563EB',
-            backgroundColor: '#2563EB',
-            tension: 0.35,
-            pointRadius: 4,
-          },
-          {
-            label: 'Maximum',
-            data: [18.5, 17.3, 15.6, 14.8, 13.4, 14.1],
-            borderColor: '#EF4444',
-            backgroundColor: '#EF4444',
-            tension: 0.35,
-            pointRadius: 4,
-          },
-          {
-            label: 'Minimum',
-            data: [8.1, 7.4, 6.8, 6.0, 5.2, 5.9],
-            borderColor: '#10B981',
-            backgroundColor: '#10B981',
-            tension: 0.35,
-            pointRadius: 4,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              usePointStyle: true,
-              boxWidth: 8,
-            },
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: { color: '#E5E7EB' },
-            ticks: { stepSize: 5 },
-          },
-          x: {
-            grid: { display: false },
-          },
-        },
-      },
-    });
-  }
+  // loadWaterLevelTrendChart() {
+  //   new Chart('waterLevelTrendChart', {
+  //     type: 'line',
+  //     data: {
+  //       labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  //       datasets: [
+  //         {
+  //           label: 'Average',
+  //           data: [12.4, 11.7, 10.1, 9.5, 8.7, 9.2],
+  //           borderColor: '#2563EB',
+  //           backgroundColor: '#2563EB',
+  //           tension: 0.35,
+  //           pointRadius: 4,
+  //         },
+  //         {
+  //           label: 'Maximum',
+  //           data: [18.5, 17.3, 15.6, 14.8, 13.4, 14.1],
+  //           borderColor: '#EF4444',
+  //           backgroundColor: '#EF4444',
+  //           tension: 0.35,
+  //           pointRadius: 4,
+  //         },
+  //         {
+  //           label: 'Minimum',
+  //           data: [8.1, 7.4, 6.8, 6.0, 5.2, 5.9],
+  //           borderColor: '#10B981',
+  //           backgroundColor: '#10B981',
+  //           tension: 0.35,
+  //           pointRadius: 4,
+  //         },
+  //       ],
+  //     },
+  //     options: {
+  //       responsive: true,
+  //       maintainAspectRatio: false,
+  //       plugins: {
+  //         legend: {
+  //           position: 'bottom',
+  //           labels: {
+  //             usePointStyle: true,
+  //             boxWidth: 8,
+  //           },
+  //         },
+  //       },
+  //       scales: {
+  //         y: {
+  //           beginAtZero: true,
+  //           grid: { color: '#E5E7EB' },
+  //           ticks: { stepSize: 5 },
+  //         },
+  //         x: {
+  //           grid: { display: false },
+  //         },
+  //       },
+  //     },
+  //   });
+  // }
 
-  loadDistrictComplianceChart() {
-    new Chart('districtComplianceChart', {
-      type: 'bar',
-      data: {
-        labels: ['Hyderabad', 'Rangareddy', 'Medak', 'Nalgonda', 'Karimnagar'],
-        datasets: [
-          {
-            label: 'Water Level',
-            data: [92, 88, 78, 85, 90],
-            backgroundColor: '#3B82F6',
-          },
-          {
-            label: 'Water Quality',
-            data: [88, 92, 83, 87, 85],
-            backgroundColor: '#10B981',
-          },
-          {
-            label: 'Flow Meters',
-            data: [85, 79, 72, 81, 83],
-            backgroundColor: '#F59E0B',
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              boxWidth: 12,
-            },
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 100,
-            grid: { color: '#E5E7EB' },
-          },
-          x: {
-            grid: { display: false },
-          },
-        },
-      },
-    });
-  }
+  // loadDistrictComplianceChart() {
+  //   new Chart('districtComplianceChart', {
+  //     type: 'bar',
+  //     data: {
+  //       labels: ['Hyderabad', 'Rangareddy', 'Medak', 'Nalgonda', 'Karimnagar'],
+  //       datasets: [
+  //         {
+  //           label: 'Water Level',
+  //           data: [92, 88, 78, 85, 90],
+  //           backgroundColor: '#3B82F6',
+  //         },
+  //         {
+  //           label: 'Water Quality',
+  //           data: [88, 92, 83, 87, 85],
+  //           backgroundColor: '#10B981',
+  //         },
+  //         {
+  //           label: 'Flow Meters',
+  //           data: [85, 79, 72, 81, 83],
+  //           backgroundColor: '#F59E0B',
+  //         },
+  //       ],
+  //     },
+  //     options: {
+  //       responsive: true,
+  //       maintainAspectRatio: false,
+  //       plugins: {
+  //         legend: {
+  //           position: 'bottom',
+  //           labels: {
+  //             boxWidth: 12,
+  //           },
+  //         },
+  //       },
+  //       scales: {
+  //         y: {
+  //           beginAtZero: true,
+  //           max: 100,
+  //           grid: { color: '#E5E7EB' },
+  //         },
+  //         x: {
+  //           grid: { display: false },
+  //         },
+  //       },
+  //     },
+  //   });
+  // }
 }

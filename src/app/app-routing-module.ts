@@ -13,7 +13,7 @@ import { ReportViolation } from './report-violation/report-violation';
 import { ApplyNoc } from './apply-noc/apply-noc';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login-signup', pathMatch: 'full' },
+  { path: '', redirectTo: 'login/user-login', pathMatch: 'full' },
   { path: 'l', redirectTo: '/login/login-screen', pathMatch: 'full' },
   { path: 'login-signup', component: LoginSignupComponent },
 
@@ -28,7 +28,7 @@ const routes: Routes = [
   {path:'dashboard', component:Dashboard},
   {path:'noc', component:NocPermissions},
   {path:'monitoring-compliance', component:MonitoringCompliance},
-  {path: 'enforcement-violations', component:EnforcementViolations}
+  {path: 'enforcement-violations', component:EnforcementViolations},
   { path: 'public-home', component: PublicHome },
   { path: 'citizen-portal', component: CitizenPortal },
   { path: 'well-register', component: WellRegister },

@@ -25,9 +25,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { NocPermissions } from './noc-permissions/noc-permissions';
 import { MonitoringCompliance } from './monitoring-compliance/monitoring-compliance';
 import { EnforcementViolations } from './enforcement-violations/enforcement-violations';
+import { ReportViolation } from './report-violation/report-violation';
+import { WellsAssets } from './wells-assets/wells-assets';
+import { ApplyNoc } from './apply-noc/apply-noc';
 
 @NgModule({
-  declarations: [App, PublicHome, CitizenPortal, WellRegister, Dashboard, NocPermissions, MonitoringCompliance, EnforcementViolations,],
+  declarations: [App, PublicHome, CitizenPortal, WellRegister, Dashboard, NocPermissions, MonitoringCompliance, EnforcementViolations,App, PublicHome, CitizenPortal, WellRegister, ReportViolation, WellsAssets, ApplyNoc],
   imports: [BrowserModule,
      AppRoutingModule,
       FormsModule,
@@ -40,31 +43,14 @@ import { EnforcementViolations } from './enforcement-violations/enforcement-viol
       MatButtonModule,
       MatDividerModule,
       MatPaginatorModule, // ✅ REQUIRED
-    MatSortModule 
-
-
-      
-
-      
-      
-      
-    ],
-import { ReportViolation } from './report-violation/report-violation';
-import { WellsAssets } from './wells-assets/wells-assets';
-import { ApplyNoc } from './apply-noc/apply-noc';
-
-
-@NgModule({
-  declarations: [App, PublicHome, CitizenPortal, WellRegister, ReportViolation, WellsAssets, ApplyNoc],
-  imports: [
-    BrowserModule,
+    MatSortModule ,
+     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
     AmigoFormComponent,
-    
-  ],
+    ],
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptorsFromDi()),
@@ -74,7 +60,7 @@ import { ApplyNoc } from './apply-noc/apply-noc';
 
     provideAmigoForm(
       {
-        apiBaseUrl: 'http://3.6.68.94/services/form-builder/forms',
+        apiBaseUrl: 'http://3.6.68.94/services/form-builder/forms/single-form',
         // endpoints: {
         //   getFormById: (id) => `/services/form-builder/forms/${id}`,
         // },

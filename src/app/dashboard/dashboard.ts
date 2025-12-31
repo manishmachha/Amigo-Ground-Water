@@ -1,7 +1,7 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';import chart from 'chart.js/auto';
+// import { MatTableDataSource } from '@angular/material/table';import chart from 'chart.js/auto';
 
 export interface DistrictNoc {
   district: string;
@@ -17,74 +17,74 @@ export interface DistrictNoc {
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard  implements AfterViewInit {
-   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.loadDonutChart();
-    this.loadLineChart();
-  }
+export class Dashboard  {
+  //  ngAfterViewInit(): void {
+  //   this.dataSource.paginator = this.paginator;
+  //   this.dataSource.sort = this.sort;
+  //   this.loadDonutChart();
+  //   this.loadLineChart();
+  // }
 
-  loadDonutChart() {
-    new chart('assessmentChart', {
-      type: 'doughnut',
-      data: {
-        labels: ['Safe', 'Semi-Critical', 'Critical', 'Over-Exploited'],
-        datasets: [
-          {
-            data: [15234, 7123, 4267, 1976],
-            backgroundColor: ['#10B981', '#F59E0B', '#EF4444', '#7F1D1D'],
-            borderWidth: 2,
-          },
-        ],
-      },
-      options: {
-        cutout: '70%',
-        plugins: {
-          legend: { display: false },
-        },
-      },
-    });
-  }
+  // loadDonutChart() {
+  //   new chart('assessmentChart', {
+  //     type: 'doughnut',
+  //     data: {
+  //       labels: ['Safe', 'Semi-Critical', 'Critical', 'Over-Exploited'],
+  //       datasets: [
+  //         {
+  //           data: [15234, 7123, 4267, 1976],
+  //           backgroundColor: ['#10B981', '#F59E0B', '#EF4444', '#7F1D1D'],
+  //           borderWidth: 2,
+  //         },
+  //       ],
+  //     },
+  //     options: {
+  //       cutout: '70%',
+  //       plugins: {
+  //         legend: { display: false },
+  //       },
+  //     },
+  //   });
+  // }
 
-  loadLineChart() {
-    new chart('extractionChart', {
-      type: 'line',
-      data: {
-        labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-        datasets: [
-          {
-            label: 'Actual',
-            data: [420, 435, 460, 475, 490, 450, 440, 445, 460, 480, 470, 455],
-            borderColor: '#EF4444',
-            backgroundColor: '#EF4444',
-            tension: 0.4,
-          },
-          {
-            label: 'Permitted',
-            data: [450, 450, 450, 450, 450, 450, 450, 450, 450, 450, 450, 450],
-            borderColor: '#3B82F6',
-            backgroundColor: '#3B82F6',
-            tension: 0.4,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'bottom',
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 600,
-          },
-        },
-      },
-    });
-  }
+  // loadLineChart() {
+  //   new chart('extractionChart', {
+  //     type: 'line',
+  //     data: {
+  //       labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+  //       datasets: [
+  //         {
+  //           label: 'Actual',
+  //           data: [420, 435, 460, 475, 490, 450, 440, 445, 460, 480, 470, 455],
+  //           borderColor: '#EF4444',
+  //           backgroundColor: '#EF4444',
+  //           tension: 0.4,
+  //         },
+  //         {
+  //           label: 'Permitted',
+  //           data: [450, 450, 450, 450, 450, 450, 450, 450, 450, 450, 450, 450],
+  //           borderColor: '#3B82F6',
+  //           backgroundColor: '#3B82F6',
+  //           tension: 0.4,
+  //         },
+  //       ],
+  //     },
+  //     options: {
+  //       responsive: true,
+  //       plugins: {
+  //         legend: {
+  //           position: 'bottom',
+  //         },
+  //       },
+  //       scales: {
+  //         y: {
+  //           beginAtZero: true,
+  //           max: 600,
+  //         },
+  //       },
+  //     },
+  //   });
+  // }
 
   nocCategories = [
   { name: 'Industrial', value: 1847, percent: 28 },
@@ -110,14 +110,14 @@ complianceMetrics = [
     'actions'
   ];
 
-dataSource = new MatTableDataSource<DistrictNoc>([
-    { district: 'Hyderabad', totalNocs: 891, oeAreas: 12, criticalAreas: 45, riskScore: 7.7 },
-    { district: 'Rangareddy', totalNocs: 734, oeAreas: 8, criticalAreas: 38, riskScore: 7.4 },
-    { district: 'Medak', totalNocs: 623, oeAreas: 67, criticalAreas: 89, riskScore: 35.8 },
-    { district: 'Nalgonda', totalNocs: 589, oeAreas: 45, criticalAreas: 72, riskScore: 27.5 },
-    { district: 'Karimnagar', totalNocs: 467, oeAreas: 23, criticalAreas: 51, riskScore: 20.8 },
-    { district: 'Warangal', totalNocs: 445, oeAreas: 34, criticalAreas: 56, riskScore: 27.9 },
-  ]);
+// dataSource = new MatTableDataSource<DistrictNoc>([
+//     { district: 'Hyderabad', totalNocs: 891, oeAreas: 12, criticalAreas: 45, riskScore: 7.7 },
+//     { district: 'Rangareddy', totalNocs: 734, oeAreas: 8, criticalAreas: 38, riskScore: 7.4 },
+//     { district: 'Medak', totalNocs: 623, oeAreas: 67, criticalAreas: 89, riskScore: 35.8 },
+//     { district: 'Nalgonda', totalNocs: 589, oeAreas: 45, criticalAreas: 72, riskScore: 27.5 },
+//     { district: 'Karimnagar', totalNocs: 467, oeAreas: 23, criticalAreas: 51, riskScore: 20.8 },
+//     { district: 'Warangal', totalNocs: 445, oeAreas: 34, criticalAreas: 56, riskScore: 27.9 },
+//   ]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

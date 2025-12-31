@@ -35,7 +35,7 @@ import { provideAmigoForm } from '../amigo-form-renderer/config';
 
     provideAmigoForm(
       {
-        apiBaseUrl: 'http://3.6.68.94/services/form-builder/forms',
+        apiBaseUrl: 'http://3.6.68.94/services/form-builder/forms/single-form',
         // endpoints: {
         //   getFormById: (id) =>`/services/form-builder/forms/${id}`,
         // },
