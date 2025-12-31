@@ -1,0 +1,127 @@
+<div class="p-6 space-y-4">
+
+    <!-- HEADER -->
+    <div class="flex items-center justify-between">
+        <h3 class="text-xl font-semibold text-gray-900">
+            Rig Violations & Enforcement (WALTA Form-7/8/9/10/11)
+        </h3>
+
+        <button class="inline-flex items-center gap-2 px-4 py-2 rounded-md
+             bg-red-600 hover:bg-red-700 text-white text-lg font-medium">
+            <i class="bi bi-exclamation-triangle"></i>
+            Report Violation
+        </button>
+    </div>
+
+    <!-- TABLE -->
+    <div class="overflow-x-auto">
+
+        <table mat-table [dataSource]="dataSource" matSort class="w-full text-sm">
+
+            <!-- Case ID -->
+            <ng-container matColumnDef="caseId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Case ID
+                </th>
+                <td mat-cell *matCellDef="let row" class="font-mono font-medium text-red-600">
+                    {{ row.caseId }}
+                </td>
+            </ng-container>
+
+            <!-- Rig ID -->
+            <ng-container matColumnDef="rigId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Rig ID
+                </th>
+                <td mat-cell *matCellDef="let row" class="font-mono text-blue-600">
+                    {{ row.rigId }}
+                </td>
+            </ng-container>
+
+            <!-- Owner -->
+            <ng-container matColumnDef="owner">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Owner
+                </th>
+                <td mat-cell *matCellDef="let row" class="text-gray-900">
+                    {{ row.owner }}
+                </td>
+            </ng-container>
+
+            <!-- Violation Type -->
+            <ng-container matColumnDef="violationType">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Violation Type
+                </th>
+                <td mat-cell *matCellDef="let row" class="font-medium text-gray-900">
+                    {{ row.violationType }}
+                </td>
+            </ng-container>
+
+            <!-- Location -->
+            <ng-container matColumnDef="location">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Location
+                </th>
+                <td mat-cell *matCellDef="let row" class="text-gray-700">
+                    {{ row.location }}
+                </td>
+            </ng-container>
+
+            <!-- Date -->
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Date
+                </th>
+                <td mat-cell *matCellDef="let row" class="text-gray-600">
+                    {{ row.date }}
+                </td>
+            </ng-container>
+
+            <!-- Severity -->
+            <ng-container matColumnDef="severity">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Severity
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <span class="px-2 py-0.5 rounded-md text-xs font-medium" [ngClass]="getSeverityClass(row.severity)">
+                        {{ row.severity }}
+                    </span>
+                </td>
+            </ng-container>
+
+            <!-- Action Taken -->
+            <ng-container matColumnDef="actionTaken">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Action Taken
+                </th>
+                <td mat-cell *matCellDef="let row" class="text-gray-700 text-sm">
+                    {{ row.actionTaken }}
+                </td>
+            </ng-container>
+
+            <!-- Details -->
+            <ng-container matColumnDef="details">
+                <th mat-header-cell *matHeaderCellDef class="text-right">
+                    Details
+                </th>
+                <td mat-cell *matCellDef="let row" class="text-right">
+                    <button class="px-3 py-1.5 rounded-md hover:bg-gray-100
+                   text-sm font-medium">
+                        View Case
+                    </button>
+                </td>
+            </ng-container>
+
+            <!-- ROWS -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        </table>
+
+        <!-- PAGINATION -->
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+        </mat-paginator>
+
+    </div>
+</div>

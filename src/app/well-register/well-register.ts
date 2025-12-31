@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './well-register.css',
 })
 export class WellRegister {
-  formId = '8724ee6f-7fd5-4c8e-aac4-883134d1712f';
+  formId = '97ac592a-a917-471e-966c-6d6dd5ac668f';
 }
