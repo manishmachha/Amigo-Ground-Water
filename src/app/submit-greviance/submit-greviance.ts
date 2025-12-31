@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-well-register',
+  selector: 'app-submit-greviance',
   standalone: false,
-  templateUrl: './well-register.html',
-  styleUrl: './well-register.css',
+  templateUrl: './submit-greviance.html',
+  styleUrl: './submit-greviance.css',
 })
-export class WellRegister {
- formId = '8724ee6f-7fd5-4c8e-aac4-883134d1712f';
+export class SubmitGreviance {
+ formId = '111df90b-b6da-42da-bf9e-a2fb37057e23';
 
   onFormSubmitted(event: any) {
     // If schema had submitApiUrl => event = { payload, response, action }
@@ -18,4 +18,5 @@ export class WellRegister {
   onFormSubmitFailed(err: any) {
     console.error('submit failed:', err);
   }
+ 
 }

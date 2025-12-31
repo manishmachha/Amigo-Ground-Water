@@ -11,6 +11,8 @@ import { EnforcementViolations } from './enforcement-violations/enforcement-viol
 import { WellsAssets } from './wells-assets/wells-assets';
 import { ReportViolation } from './report-violation/report-violation';
 import { ApplyNoc } from './apply-noc/apply-noc';
+import { SubmitGreviance } from './submit-greviance/submit-greviance';
+import { CitizenProfile } from './citizen-profile/citizen-profile';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login/user-login', pathMatch: 'full' },
@@ -35,6 +37,8 @@ const routes: Routes = [
   { path: 'wells-assets', component: WellsAssets },
   { path: 'report-voilation', component: ReportViolation},
   { path: 'apply-noc', component: ApplyNoc},
+  {path:'submit-greviance',component:SubmitGreviance},
+  {path:'profile', component:CitizenProfile},
   {
     path: 'rig-management',
     loadChildren: () => import('./rig-management-module/rig-management-module-module').then((m) => m.RigManagementModuleModule),

@@ -31,7 +31,8 @@ export class CitizenPortal {
     {
       title: 'Submit Grievance',
       icon: 'bi-chat-dots',
-      bg: 'bg-purple-500'
+      bg: 'bg-purple-500',
+      routerLink: '/submit-greviance'
     }
   ];
 
