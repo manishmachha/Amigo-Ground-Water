@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth/auth-service';
+import { Router } from '@angular/router';
+import { TokenInterceptor } from '../../interceptors/TokenInterceptor';
 
 type LoginMode = 'password' | 'otp';
 @Component({
@@ -8,89 +11,31 @@ type LoginMode = 'password' | 'otp';
   templateUrl: './userlogin-screen.html',
   styleUrl: './userlogin-screen.css',
 })
-export class UserloginScreen implements OnInit {
-  passwordForm!: FormGroup;
-  otpForm!: FormGroup;
+export class UserloginScreen {
 
-  mode: LoginMode = 'password';
-  otpSent = false;
-  showPassword = false;
+  constructor(private authService: AuthService, private router: Router) { }
 
-  constructor(private fb: FormBuilder) { }
-
-  ngOnInit(): void {
-    // PASSWORD FORM
-    this.passwordForm = this.fb.group({
-      mobile: ['', Validators.required],
-      password: ['', Validators.required],
-      remember: [false],
-    });
-
-    // OTP FORM
-    this.otpForm = this.fb.group({
-     mobile: ['', [Validators.required, this.emailOrMobileValidator]],
-      otp: [''],
-    });
-  }
-
-  emailOrMobileValidator(control: any) {
-  const value = control.value;
-  if (!value) return null;
-
-  const mobileRegex = /^[6-9]\d{9}$/;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (mobileRegex.test(value) || emailRegex.test(value)) {
-    return null; // ✅ valid
-  }
-
-  return { invalidContact: true }; // ❌ invalid
-}
+  formId = 'e3346c85-4745-4a9e-9d9f-b4238cbb0778';
 
 
-  switchMode(mode: LoginMode) {
-    this.mode = mode;
-    this.otpSent = false;
 
-    this.passwordForm.reset({ remember: false });
-    this.otpForm.reset();
-  }
-
-  loginWithPassword() {
-    if (this.passwordForm.invalid) {
-      this.passwordForm.markAllAsTouched();
-      return;
+  onFormSubmitted(event: any) {
+    // If schema had submitApiUrl => event = { payload, response, action }
+    // Else => event = raw payload (backward compatible)
+    console.log('submitted event:', event);
+    if (event.response.success) {
+      this.authService.setLoginStatus(true);
+      this.authService.setAuthToken(event.response.data.token);
+      this.authService.setUserRole(event.response.data.user.role.name);
+      this.router.navigate(['/citizen-portal']);
+      
     }
-
-    console.log('Password Login', this.passwordForm.value);
   }
 
-  sendOtp() {
-    if (this.otpForm.get('mobile')?.invalid) {
-      this.otpForm.get('mobile')?.markAsTouched();
-      return;
-    }
-
-    this.otpSent = true;
-
-    this.otpForm
-      .get('otp')
-      ?.setValidators([Validators.required, Validators.pattern(/^\d{6}$/)]);
-    this.otpForm.get('otp')?.updateValueAndValidity();
+  onFormSubmitFailed(err: any) {
+    console.error('submit failed:', err);
   }
 
 
-  verifyOtp() {
-    if (this.otpForm.invalid) {
-      this.otpForm.markAllAsTouched();
-      return;
-    }
 
-    console.log('OTP Login', this.otpForm.value);
-  }
-
-  changeMobile() {
-    this.otpSent = false;
-    this.otpForm.get('otp')?.reset();
-  }
 }
