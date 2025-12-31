@@ -133,13 +133,28 @@ export interface FormActionSchema {
   // Optional fields used by your composer
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   submitApiUrl?: string;
+
+  /**
+   * Optional:
+   * - auto: JSON unless files exist (recommended)
+   * - json: always JSON (will fail for File objects)
+   * - multipart: always FormData
+   */
+  contentType?: 'auto' | 'json' | 'multipart';
+
+  /**
+   * Optional: if you want to wrap payload inside a key
+   * Example: payloadKey="data" => { data: <formValue> }
+   */
+  payloadKey?: string;
 }
 
-export interface FormStepSchema {
+export interface FormStepConfig {
   id: string;
   label: string;
   order: number;
   fieldIds: string[];
+  icon?: string;
 }
 
 export interface FormSectionSchema {
@@ -161,6 +176,6 @@ export interface FormSchema {
 
   fields: FormFieldSchema[];
 
-  steps?: FormStepSchema[];
+  steps?: FormStepConfig[];
   sections?: FormSectionSchema[];
 }
