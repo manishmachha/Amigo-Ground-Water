@@ -14,7 +14,8 @@ export class CitizenPortal {
     {
       title: 'Apply for NOC',
       icon: 'bi-file-earmark-text',
-      bg: 'bg-blue-500'
+      bg: 'bg-blue-500',
+      routerLink: '/apply-noc'
     },
     {
       title: 'Register Well',
