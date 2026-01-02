@@ -57,18 +57,20 @@
                 </div>
 
                 <!-- RIGHT -->
-                <div class="mt-2 sm:mt-1 ml-30 mr-10">
-                    Do You Have an account?
-                    <span class="text-blue-600 cursor-pointer ml-1" routerLink="/login/register-screen">
-                        Register Here
-                    </span>
-                </div>
+                
 
             </div>
 
 
             <amigo-form [formId]="formId" (submitted)="onFormSubmitted($event)"
                 (submitFailed)="onFormSubmitFailed($event)"></amigo-form>
+
+                <div class=" ml-35 mr-10">
+                    Do You Have an account?
+                    <span class="text-blue-600 cursor-pointer ml-1" routerLink="/login/register-screen">
+                        Register as Citizen
+                    </span>
+                </div>
 
         </div>
     </div>

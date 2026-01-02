@@ -52,7 +52,7 @@ export class ReportViolation {
 
   openFormBuilder() {
   window.open(
-    'http://localhost:51719/form-builder',
+    'http://localhost:62132/form-builder',
   );
 }
 

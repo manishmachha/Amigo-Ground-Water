@@ -25,7 +25,7 @@ export class Userlogin {
     console.log('submitted event:', event);
     if (event.response.success) {
       this.authService.setLoginStatus(true);
-      this.authService.setAuthToken(event.response.data.tokens.accessToken);
+      this.authService.setAuthToken(event.response.data.tokens.refreshToken);
       this.authService.setUserRole(event.response.data.user.role.name);
       this.router.navigate(['/citizen-portal']);
       
