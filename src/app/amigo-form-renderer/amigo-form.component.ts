@@ -49,7 +49,11 @@ export class AmigoFormComponent implements OnChanges {
     private formService: AmigoFormService,
     private cdr: ChangeDetectorRef,
     private zone: NgZone
+<<<<<<< HEAD
+  ) { }
+=======
   ) {}
+>>>>>>> main
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['schema'] || changes['formId']) {
@@ -324,7 +328,9 @@ export class AmigoFormComponent implements OnChanges {
 
     if (this.form.invalid) return;
 
-    const payload = this.form.getRawValue();
+    const rawPayload = this.form.value;
+    const payload = this.normalizePayload(rawPayload);
+
     const action: FormActionSchema | undefined = this.resolvedSchema?.actions;
 
     // If no API config, keep old behavior
@@ -437,6 +443,31 @@ export class AmigoFormComponent implements OnChanges {
     const a: any = this.resolvedSchema?.actions ?? {};
     return a.showCancel !== false;
   }
+<<<<<<< HEAD
+
+  private normalizePayload(payload: Record<string, any>): Record<string, any> {
+  const normalized: Record<string, any> = {};
+
+  for (const field of this.resolvedSchema?.fields ?? []) {
+    const key = this.controlKey(field);
+    const value = payload[key];
+
+    //  ONLY for number fields
+    if (field.type === 'number') {
+      normalized[key] =
+        value === '' || value === undefined ? null : Number(value);
+    } else {
+      //  Do NOT touch text / other fields
+      normalized[key] = value;
+    }
+  }
+
+  return normalized;
+}
+
+
+=======
+>>>>>>> main
 }
 
 function px(v: any): string | null {

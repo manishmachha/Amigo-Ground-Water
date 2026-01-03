@@ -12,19 +12,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  getOtp(otpRequest: any): Observable<any> {
-    return this.http.post(
-      'http://3.6.68.94/services/user/api/users/request-otp',
-      otpRequest
-    );
-  }
 
-  login(creds: any): Observable<any> {
-    return this.http.post(
-      'http://3.6.68.94/services/user/api/users/login',
-      creds
-    );
-  }
 
   setAuthToken(token: string): void {
     this.authToken = token;
