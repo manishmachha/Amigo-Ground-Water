@@ -28,6 +28,7 @@ import { EnforcementViolations } from './enforcement-violations/enforcement-viol
 import { ReportViolation } from './report-violation/report-violation';
 import { WellsAssets } from './wells-assets/wells-assets';
 import { ApplyNoc } from './apply-noc/apply-noc';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [App, PublicHome, CitizenPortal, WellRegister, Dashboard, NocPermissions, MonitoringCompliance, EnforcementViolations,App, PublicHome, CitizenPortal, WellRegister, ReportViolation, WellsAssets, ApplyNoc],
@@ -50,6 +51,7 @@ import { ApplyNoc } from './apply-noc/apply-noc';
     ReactiveFormsModule,
     CommonModule,
     AmigoFormComponent,
+    RouterModule
     ],
   providers: [
     provideBrowserGlobalErrorListeners(),
