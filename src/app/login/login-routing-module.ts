@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginScreen } from './login-screen/login-screen';
-import { RegisterScreen } from './register-screen/register-screen';
-import { UserloginScreen } from './userlogin-screen/userlogin-screen';
+import { Login } from './login/login';
+import { Register } from './register/register';
+import { Userlogin } from './userlogin/userlogin';
 
 const routes: Routes = [
-  { path: 'register-screen', component: RegisterScreen },
-    { path: 'login-screen', component: LoginScreen },
-    { path: 'user-login', component: UserloginScreen}
+  { path: 'register-screen', component: Register },
+  { path: 'login-screen', component: Login },
+  { path: 'user-login', component: Userlogin }
 
 ];
 

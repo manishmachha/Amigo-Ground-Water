@@ -49,4 +49,11 @@ export class ReportViolation {
     },
   ];
 
+
+  openFormBuilder() {
+  window.open(
+    'http://localhost:62132/form-builder',
+  );
+}
+
 }

@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './well-register.css',
 })
 export class WellRegister {
- formId = '8724ee6f-7fd5-4c8e-aac4-883134d1712f';
+  formId = '8724ee6f-7fd5-4c8e-aac4-883134d1712f';
 
-  onFormSubmitted(event: any) {
+   onFormSubmitted(event: any) {
     // If schema had submitApiUrl => event = { payload, response, action }
     // Else => event = raw payload (backward compatible)
     console.log('submitted event:', event);

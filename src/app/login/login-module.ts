@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {  provideBrowserGlobalErrorListeners } from '@angular/core';
+import { provideBrowserGlobalErrorListeners } from '@angular/core';
 
 import { LoginRoutingModule } from './login-routing-module';
-import { LoginScreen } from './login-screen/login-screen';
-import { RegisterScreen } from './register-screen/register-screen';
+import { Login } from './login/login';
+import { Register } from './register/register';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UserloginScreen } from './userlogin-screen/userlogin-screen';
+import { Userlogin } from './userlogin/userlogin';
 import { AmigoFormComponent } from '../amigo-form-renderer/amigo-form.component';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TokenInterceptor } from '../interceptors/TokenInterceptor';
@@ -16,22 +16,22 @@ import { provideAmigoForm } from '../amigo-form-renderer/config';
 
 @NgModule({
   declarations: [
-    RegisterScreen,
-        LoginScreen,
-        UserloginScreen
+    Register,
+    Login,
+    Userlogin
   ],
   imports: [
     CommonModule,
     LoginRoutingModule,
-    ReactiveFormsModule,AmigoFormComponent
+    ReactiveFormsModule, AmigoFormComponent
   ],
 
-   providers: [
+  providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
-    
+
 
     provideAmigoForm(
       {

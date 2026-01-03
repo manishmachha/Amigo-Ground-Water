@@ -4,10 +4,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-login-screen',
   standalone: false,
-  templateUrl: './login-screen.html',
-  styleUrl: './login-screen.css',
+  templateUrl: './login.html',
+  styleUrl: './login.css',
 })
-export class LoginScreen implements OnInit {
+export class Login implements OnInit {
   loginForm!: FormGroup;
   otpSent = false;
   selectedRole = 'Citizen';
