@@ -28,10 +28,12 @@ import { EnforcementViolations } from './enforcement-violations/enforcement-viol
 import { ReportViolation } from './report-violation/report-violation';
 import { WellsAssets } from './wells-assets/wells-assets';
 import { ApplyNoc } from './apply-noc/apply-noc';
+import { SubmitGreviance } from './submit-greviance/submit-greviance';
+import { CitizenProfile } from './citizen-profile/citizen-profile';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [App, PublicHome, CitizenPortal, WellRegister, Dashboard, NocPermissions, MonitoringCompliance, EnforcementViolations,App, PublicHome, CitizenPortal, WellRegister, ReportViolation, WellsAssets, ApplyNoc],
+  declarations: [App, PublicHome, CitizenPortal, WellRegister, Dashboard, NocPermissions, MonitoringCompliance, EnforcementViolations,App, PublicHome, CitizenPortal, WellRegister, ReportViolation, WellsAssets, ApplyNoc, SubmitGreviance, CitizenProfile, ],
   imports: [BrowserModule,
      AppRoutingModule,
       FormsModule,
