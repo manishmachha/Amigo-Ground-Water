@@ -17,10 +17,10 @@ const routes: Routes = [
   { path: '', redirectTo: 'login/user-login', pathMatch: 'full' },
   { path: 'l', redirectTo: '/login/login-screen', pathMatch: 'full' },
   // { path: 'login-signup', component: LoginSignupComponent },
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  // { path: '', redirectTo: 'auth', pathMatch: 'full' },
 
   {
-    path: 'auth',
+    path: 'login',
     loadChildren: () => import('./login/login-module').then((m) => m.LoginModule),
   },
 
