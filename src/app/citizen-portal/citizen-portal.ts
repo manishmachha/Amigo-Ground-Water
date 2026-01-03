@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { CitizenProfileService } from '../services/citizen-profile-service';
 
 @Component({
   selector: 'app-citizen-portal',
@@ -7,8 +9,18 @@ import { RouterLink } from '@angular/router';
   templateUrl: './citizen-portal.html',
   styleUrl: './citizen-portal.css',
 })
-export class CitizenPortal {
+export class CitizenPortal implements OnInit{
   searchText = '';
+  applications: any[] = [];
+  grievances: any[] = [];
+
+  constructor (private http: HttpClient, private citezenPortal: CitizenProfileService, private cdr: ChangeDetectorRef){}
+
+  ngOnInit(): void {
+    this.loadApplications();
+    this.loadGrievances();
+
+  }
 
   actions = [
     {
@@ -37,26 +49,41 @@ export class CitizenPortal {
     }
   ];
 
-  applications = [
-    {
-      title: 'NOC Application',
-      appId: 'APP-NOC-2024-1234',
-      submittedOn: '15/1/2024',
-      stage: 'Technical Review',
-      status: 'Under Review',
-      statusColor: 'bg-yellow-100 text-yellow-700 border-yellow-300',
-      icon: 'bi-clock'
+loadApplications() {
+  this.citezenPortal.getMyApplications().subscribe({
+    next: (res: any) => {
+      console.log('application response', res);
+
+      this.applications = res.data
+
+      console.log('Mapped applications:', this.applications);
+      this.cdr.detectChanges();
     },
-    {
-      title: 'Well Registration',
-      appId: 'APP-WELL-2023-8765',
-      submittedOn: '20/12/2023',
-      stage: 'Completed',
-      status: 'Approved',
-      statusColor: 'bg-green-100 text-green-700 border-green-300',
-      icon: 'bi-check-circle'
+    error: (err) => {
+      console.error('Failed to load applications', err);
     }
-  ];
+  });
+}
+  // applications = [
+  //   {
+  //     title: 'NOC Application',
+  //     appId: 'APP-NOC-2024-1234',
+  //     submittedOn: '15/1/2024',
+  //     stage: 'Technical Review',
+  //     status: 'Under Review',
+  //     statusColor: 'bg-yellow-100 text-yellow-700 border-yellow-300',
+  //     icon: 'bi-clock'
+  //   },
+  //   {
+  //     title: 'Well Registration',
+  //     appId: 'APP-WELL-2023-8765',
+  //     submittedOn: '20/12/2023',
+  //     stage: 'Completed',
+  //     status: 'Approved',
+  //     statusColor: 'bg-green-100 text-green-700 border-green-300',
+  //     icon: 'bi-check-circle'
+  //   }
+  // ];
 
   notifications = [
     {
@@ -73,25 +100,42 @@ export class CitizenPortal {
     }
   ];
 
-  grievances = [
-    {
-      title: 'Unauthorized Well Near Property',
-      refId: 'GRV-2024-0567',
-      submittedOn: '20/1/2024',
-      status: 'In Progress',
-      statusClass: 'bg-blue-100 text-blue-700 border-blue-300',
-      icon: 'bi-clock'
-    },
-    {
-      title: 'Application Processing Delay',
-      refId: 'GRV-2023-9876',
-      submittedOn: '10/11/2023',
-      status: 'Resolved',
-      statusClass: 'bg-green-100 text-green-700 border-green-300',
-      icon: 'bi-check-circle'
-    }
-  ];
+  // grievances = [
+  //   {
+  //     title: 'Unauthorized Well Near Property',
+  //     refId: 'GRV-2024-0567',
+  //     submittedOn: '20/1/2024',
+  //     status: 'In Progress',
+  //     statusClass: 'bg-blue-100 text-blue-700 border-blue-300',
+  //     icon: 'bi-clock'
+  //   },
+  //   {
+  //     title: 'Application Processing Delay',
+  //     refId: 'GRV-2023-9876',
+  //     submittedOn: '10/11/2023',
+  //     status: 'Resolved',
+  //     statusClass: 'bg-green-100 text-green-700 border-green-300',
+  //     icon: 'bi-check-circle'
+  //   }
+  // ];
 
+
+  loadGrievances() {
+  this.citezenPortal.getGrievances().subscribe({
+    next: (res: any) => {
+      console.log('grievances response', res);
+
+      this.applications = res.data
+
+      console.log('Mapped grievances:', this.grievances);
+      this.cdr.detectChanges();
+    },
+    error: (err) => {
+      console.error('Failed to load grievances', err);
+    }
+  });
+}
+  
   documents = [
     {
       name: 'NOC Application Form',

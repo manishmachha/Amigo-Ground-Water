@@ -7,11 +7,10 @@ import { Login } from './login/login';
 import { Register } from './register/register';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Userlogin } from './userlogin/userlogin';
-import { AmigoFormComponent } from '../amigo-form-renderer/amigo-form.component';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TokenInterceptor } from '../interceptors/TokenInterceptor';
 import { LoaderInterceptor } from '../interceptors/LoaderInterceptor';
-import { provideAmigoForm } from '../amigo-form-renderer/config';
+import { AmigoFormComponent, provideAmigoForm} from '@amigo/amigo-form-renderer';
 
 
 @NgModule({

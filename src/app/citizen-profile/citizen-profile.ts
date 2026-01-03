@@ -1,6 +1,7 @@
 import { TAB } from '@angular/cdk/keycodes';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CitizenProfileService } from '../services/citizen-profile-service';
 
 
 type Tab = 'personal' | 'contact' | 'documents' | 'security' | 'notifications';
@@ -12,70 +13,107 @@ type Tab = 'personal' | 'contact' | 'documents' | 'security' | 'notifications';
   templateUrl: './citizen-profile.html',
   styleUrl: './citizen-profile.css',
 })
-export class CitizenProfile {
+export class CitizenProfile implements OnInit {
 
 
-formIdMap: Record<Tab, string> = {
-  personal: 'b245b347-60b6-4798-9cb7-04860d9b7393',
-  contact: '58d14e21-ab6d-462c-be52-7e3fb1fc8d59',
-  documents: '800aeaef-1870-4c92-b0d7-ee1ab12da2d7',
-  security: '2e4c0744-4a7c-4a33-b1ad-ee2dffb23b97 ',
-  notifications: '614593df-46c1-40ca-94c2-9f38be704319',
-};
+  formIdMap: Record<Tab, string> = {
+    personal: 'b245b347-60b6-4798-9cb7-04860d9b7393',
+    contact: '58d14e21-ab6d-462c-be52-7e3fb1fc8d59',
+    documents: '800aeaef-1870-4c92-b0d7-ee1ab12da2d7',
+    security: '2e4c0744-4a7c-4a33-b1ad-ee2dffb23b97 ',
+    notifications: '614593df-46c1-40ca-94c2-9f38be704319',
+  };
 
 
   get currentFormId(): string {
-  return this.formIdMap[this.activeTab];
-}
-    onFormSubmitted(event: any) {
-      // If schema had submitApiUrl => event = { payload, response, action }
-      // Else => event = raw payload (backward compatible)
-      console.log('submitted event:', event);
-    }
+    return this.formIdMap[this.activeTab];
+  }
+  onFormSubmitted(event: any) {
+    // If schema had submitApiUrl => event = { payload, response, action }
+    // Else => event = raw payload (backward compatible)
+    console.log('submitted event:', event);
+  }
 
-    onFormSubmitFailed(err: any) {
-      console.error('submit failed:', err);
-    }
+  onFormSubmitFailed(err: any) {
+    console.error('submit failed:', err);
+  }
 
 
-activeTab: 'personal' | 'contact' | 'documents' | 'security' | 'notifications' = 'personal';
+  activeTab: 'personal' | 'contact' | 'documents' | 'security' | 'notifications' = 'personal';
   editMode = {
-  personal: false,
-  contact: false,
-  documents: false,
-  security: false,
-  notifications: false
-};
+    personal: false,
+    contact: false,
+    documents: false,
+    security: false,
+    notifications: false
+  };
 
   personalForm!: FormGroup;
   contactForm!: FormGroup;
   passwordForm!: FormGroup;
   notificationForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private profileService: CitizenProfileService
+  ) {
     this.initForms();
   }
 
+  ngOnInit(): void {
+    this.loadProfileDetails();
+  }
+
+  loadProfileDetails() {
+    this.profileService.personalInfo().subscribe({
+      next: (res: any) => {
+        console.log('Profile data:', res);
+
+        // 🔹 Patch PERSONAL form
+        this.personalForm.patchValue({
+          fullName: res.data.user.fullName,
+          dob: res.data.user.dob,
+          gender: res.data.user.gender,
+          aadhaar: res.data.user.idProofNumber,
+          pan: res.data.user.pan,
+        });
+
+        this.contactForm.patchValue({
+          email: res.data.user.email,
+          mobileNumber:res.data.user.mobileNumber,
+        address1: res.data.user.mandal,   
+        address2: res.data.user.street,    
+        city: res.data.user.village,
+        district: res.data.user.district,
+        pinCode: res.data.user.pinCode,
+        });
+      },
+      error: (err) => {
+        console.error('Failed to load profile', err);
+      }
+    });
+  }
+
+
   private initForms() {
     this.personalForm = this.fb.group({
-      fullName: ['Rajesh Kumar'],
-      dob: ['15-06-1985'],
-      gender: ['Male'],
-      aadhaar: ['XXXX-XXXX-1234'],
-      pan: ['ABCDE1234F'],
+      fullName: [''],
+      dob: [''],
+      gender: [''],
+      aadhaar: [''],
+      pan: [''],
     });
 
     this.contactForm = this.fb.group({
-      email: ['rajesh.kumar@email.com'],
-      mobile: ['+91 98765 43210'],
-      altMobile: ['+91 87654 32109'],
-      whatsapp: ['+91 98765 43210'],
+      email: [''],
+      mobileNumber: [''],
+      altMobile: [''],
+      whatsapp: [' '],
       address1: ['H.No. 12-34/A, Street No. 5'],
       address2: ['Kukatpally'],
-      city: ['Hyderabad'],
-      district: ['Hyderabad'],
+      city: [''],
+      district: [''],
       state: ['Telangana'],
-      pin: ['500072'],
+      pinCode: [''],
     });
 
     this.passwordForm = this.fb.group({
@@ -98,17 +136,18 @@ activeTab: 'personal' | 'contact' | 'documents' | 'security' | 'notifications' =
 
   switchTab(tab: Tab) {
     this.activeTab = tab;
+    this.loadProfileDetails();
   }
 
- enableEdit(tab: keyof typeof this.editMode) {
-  this.editMode[tab] = true;
-}
- cancelEdit(tab: keyof typeof this.editMode) {
-  this.editMode[tab] = false;
-}
+  enableEdit(tab: keyof typeof this.editMode) {
+    this.editMode[tab] = true;
+  }
+  cancelEdit(tab: keyof typeof this.editMode) {
+    this.editMode[tab] = false;
+  }
 
- saveChanges(tab: keyof typeof this.editMode) {
-  // API / amigo-form submit already handled
-  this.editMode[tab] = false;
-}
+  saveChanges(tab: keyof typeof this.editMode) {
+    // API / amigo-form submit already handled
+    this.editMode[tab] = false;
+  }
 }
