@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-report-violation',
@@ -9,13 +11,44 @@ import { Component } from '@angular/core';
 export class ReportViolation {
   formId = '02acf12c-c4a5-4a82-a581-7eca93cae62d';
 
+  constructor(
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) { }
+
   onFormSubmitted(event: any) {
-    // If schema had submitApiUrl => event = { payload, response, action }
-    // Else => event = raw payload (backward compatible)
     console.log('submitted event:', event);
+
+    if (event?.response?.success) {
+
+      // Show SnackBar
+      this.snackBar.open(
+        'NOC Form submitted successfully',
+        'Close',
+        {
+          duration: 3000,          // 3 seconds
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['success-snackbar']
+        }
+      );
+
+      // Navigate AFTER snackbar shows
+      setTimeout(() => {
+        this.router.navigate(['/citizen-portal']);
+      }, 3000);
+    }
   }
 
   onFormSubmitFailed(err: any) {
+    this.snackBar.open(
+      'Failed to submit NOC form',
+      'Close',
+      {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      }
+    );
     console.error('submit failed:', err);
   }
 
