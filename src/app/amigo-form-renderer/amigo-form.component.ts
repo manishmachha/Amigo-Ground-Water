@@ -49,7 +49,11 @@ export class AmigoFormComponent implements OnChanges {
     private formService: AmigoFormService,
     private cdr: ChangeDetectorRef,
     private zone: NgZone
+<<<<<<< HEAD
   ) { }
+=======
+  ) {}
+>>>>>>> main
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['schema'] || changes['formId']) {
@@ -439,6 +443,7 @@ export class AmigoFormComponent implements OnChanges {
     const a: any = this.resolvedSchema?.actions ?? {};
     return a.showCancel !== false;
   }
+<<<<<<< HEAD
 
   private normalizePayload(payload: Record<string, any>): Record<string, any> {
   const normalized: Record<string, any> = {};
@@ -461,6 +466,8 @@ export class AmigoFormComponent implements OnChanges {
 }
 
 
+=======
+>>>>>>> main
 }
 
 function px(v: any): string | null {
