@@ -35,78 +35,86 @@
   </div>
 
   <!-- ================= PERSONAL ================= -->
-  <div *ngIf="activeTab==='personal'" class="bg-white rounded-2xl border p-8">
+    <div *ngIf="activeTab==='personal'" class="bg-white rounded-2xl border p-8">
 
-    <div class="flex justify-between mb-6">
-      <h2 class="text-lg font-semibold">Personal Information</h2>
+      <div class="flex justify-between mb-6">
+        <h2 class="text-lg font-semibold">Personal Information</h2>
 
-      <button *ngIf="!editMode.personal" (click)="enableEdit('personal')"
-        class="px-4 py-2 border rounded-lg text-sm">
-        <i class="bi bi-pencil"></i> Edit
-      </button>
+        <button *ngIf="!editMode.personal" (click)="enableEdit('personal')"
+          class="px-4 py-2 border rounded-lg text-sm">
+          <i class="bi bi-pencil"></i> Edit
+        </button>
 
-      <button *ngIf="editMode.personal" (click)="cancelEdit('personal')"
-        class="px-4 py-2 border rounded-lg text-sm">
-        Cancel
-      </button>
+        <button *ngIf="editMode.personal" (click)="cancelEdit('personal')"
+          class="px-4 py-2 border rounded-lg text-sm">
+          Cancel
+        </button>
+      </div>
+
+      <ng-container *ngIf="!editMode.personal">
+        <form [formGroup]="personalForm" class="grid md:grid-cols-2 gap-6">
+          <input class="input" formControlName="fullName" readonly>
+          <input class="input" formControlName="dob" readonly>
+          <input class="input" formControlName="gender" readonly>
+          <input class="input" formControlName="aadhaar" readonly>
+          <input class="input" formControlName="pan" readonly>
+        </form>
+      </ng-container>
+
+      <ng-container *ngIf="editMode.personal">
+        <!-- <amigo-form
+          [formId]="currentFormId"
+          (submitted)="saveChanges('personal')"
+          (submitFailed)="onFormSubmitFailed($event)">
+        </amigo-form> -->
+
+        <amigo-form
+         [formId]="currentFormId"
+        (submitted)="onFormSubmitted($event)"
+        (submitFailed)="onFormSubmitFailed($event)"
+        [initialValue]="editMode
+        ">
+      </amigo-form>
+      </ng-container>
+
     </div>
 
-    <ng-container *ngIf="!editMode.personal">
-      <form [formGroup]="personalForm" class="grid md:grid-cols-2 gap-6">
-        <input class="input" formControlName="fullName" readonly>
-        <input class="input" formControlName="dob" readonly>
-        <input class="input" formControlName="gender" readonly>
-        <input class="input" formControlName="aadhaar" readonly>
-        <input class="input" formControlName="pan" readonly>
+    <!-- ================= CONTACT ================= -->
+    <div *ngIf="activeTab==='contact'" class="bg-white rounded-2xl border p-8 mt-6">
+
+      <div class="flex justify-between mb-6">
+        <h2 class="text-lg font-semibold">Contact Information</h2>
+
+        <button *ngIf="!editMode.contact" (click)="enableEdit('contact')" class="btn">
+          Edit
+        </button>
+
+        <button *ngIf="editMode.contact" (click)="cancelEdit('contact')" class="btn">
+          Cancel
+        </button>
+      </div>
+
+      <form [formGroup]="contactForm" class="grid md:grid-cols-2 gap-6">
+        <input class="input" formControlName="email" [readonly]="!editMode.contact">
+        <input class="input" formControlName="mobileNumber" [readonly]="!editMode.contact">
+        <input class="input" formControlName="altMobile" [readonly]="!editMode.contact">
+        <input class="input" formControlName="whatsapp" [readonly]="!editMode.contact">
+        <input class="input md:col-span-2" formControlName="address1" [readonly]="!editMode.contact">
+        <input class="input md:col-span-2" formControlName="address2" [readonly]="!editMode.contact">
       </form>
-    </ng-container>
 
-    <ng-container *ngIf="editMode.personal">
-      <amigo-form
-         [formId]="currentFormId"
-        (submitted)="saveChanges('personal')"
-        (submitFailed)="onFormSubmitFailed($event)">
-      </amigo-form>
-    </ng-container>
+      <div *ngIf="editMode.contact" class="flex justify-end mt-6">
+        <button (click)="saveChanges('contact')" class="save-btn">Save Changes</button>
+      </div>
 
-  </div>
-
-  <!-- ================= CONTACT ================= -->
-  <div *ngIf="activeTab==='contact'" class="bg-white rounded-2xl border p-8 mt-6">
-
-    <div class="flex justify-between mb-6">
-      <h2 class="text-lg font-semibold">Contact Information</h2>
-
-      <button *ngIf="!editMode.contact" (click)="enableEdit('contact')" class="btn">
-        Edit
-      </button>
-
-      <button *ngIf="editMode.contact" (click)="cancelEdit('contact')" class="btn">
-        Cancel
-      </button>
+      <ng-container *ngIf="editMode.contact">
+        <amigo-form
+          [formId]="currentFormId"
+          (submitted)="saveChanges('contact')"
+          (submitFailed)="onFormSubmitFailed($event)">
+        </amigo-form>
+      </ng-container>
     </div>
-
-    <form [formGroup]="contactForm" class="grid md:grid-cols-2 gap-6">
-      <input class="input" formControlName="email" [readonly]="!editMode.contact">
-      <input class="input" formControlName="mobile" [readonly]="!editMode.contact">
-      <input class="input" formControlName="altMobile" [readonly]="!editMode.contact">
-      <input class="input" formControlName="whatsapp" [readonly]="!editMode.contact">
-      <input class="input md:col-span-2" formControlName="address1" [readonly]="!editMode.contact">
-      <input class="input md:col-span-2" formControlName="address2" [readonly]="!editMode.contact">
-    </form>
-
-    <div *ngIf="editMode.contact" class="flex justify-end mt-6">
-      <button (click)="saveChanges('contact')" class="save-btn">Save Changes</button>
-    </div>
-
-    <ng-container *ngIf="editMode.contact">
-      <amigo-form
-         [formId]="currentFormId"
-        (submitted)="saveChanges('contact')"
-        (submitFailed)="onFormSubmitFailed($event)">
-      </amigo-form>
-    </ng-container>
-  </div>
 
   <!-- ================= DOCUMENTS ================= -->
   <div *ngIf="activeTab==='documents'" class="bg-white rounded-2xl border p-8 mt-6">

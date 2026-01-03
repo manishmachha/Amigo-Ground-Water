@@ -22,8 +22,7 @@
           <span class="absolute -top-1 -right-1 w-2 h-2  rounded-full"></span>
         </div>
 
-        <button
-        routerLink="/profile"
+        <button routerLink="/profile"
           class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100">
           <i class="bi bi-person"></i>
           Profile
@@ -46,26 +45,17 @@
     <!-- Search -->
     <div class="max-w-3xl mb-12 relative">
       <i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-      <input
-        type="text"
-        [(ngModel)]="searchText"
-        placeholder="Search applications, grievances, or documents..."
-        class="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-300 shadow-sm
-               "
-      />
+      <input type="text" [(ngModel)]="searchText" placeholder="Search applications, grievances, or documents..." class="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-300 shadow-sm
+               " />
     </div>
 
     <!-- ACTION CARDS -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
-      <div 
-        *ngFor="let action of actions"   [routerLink]="action.routerLink"
-        class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm
+      <div *ngFor="let action of actions" [routerLink]="action.routerLink" class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm
                hover:shadow-md transition cursor-pointer">
 
-        <div
-          class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 text-white"
-          [ngClass]="action.bg">
+        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6 text-white" [ngClass]="action.bg">
           <i class="bi {{ action.icon }} text-2xl"></i>
         </div>
 
@@ -105,9 +95,7 @@
     <!-- Application List -->
     <div class="space-y-4">
 
-      <div
-        *ngFor="let app of applications"
-        class="bg-gray-50 rounded-xl p-5 flex items-start justify-between">
+      <div *ngFor="let app of applications" class="bg-gray-50 rounded-xl p-5 flex items-start justify-between">
 
         <!-- Left -->
         <div>
@@ -115,18 +103,17 @@
             {{ app.title }}
           </h3>
           <p class="text-sm text-gray-500 mb-2">
-            {{ app.appId }}
-          </p>
+            {{ app.id }}
+          </p>   
 
           <div class="text-sm text-gray-600 flex flex-wrap gap-4">
-            <span>Submitted: {{ app.submittedOn }}</span>
+            <span>Submitted: {{ app.createdAt }}</span>
             <span>Stage: {{ app.stage }}</span>
           </div>
         </div>
 
         <!-- Status -->
-        <div
-          class="flex items-center gap-2 px-3 py-1 rounded-full border text-sm font-medium"
+        <div class="flex items-center gap-2 px-3 py-1 rounded-full border text-sm font-medium"
           [ngClass]="app.statusColor">
           <i class="bi {{ app.icon }}"></i>
           {{ app.status }}
@@ -138,8 +125,7 @@
 
     <!-- Footer -->
     <div class="mt-6">
-      <button
-        class="w-full py-3 rounded-xl border border-gray-300 text-gray-700
+      <button class="w-full py-3 rounded-xl border border-gray-300 text-gray-700
                font-medium hover:bg-gray-100 flex items-center justify-center gap-2">
         View All Applications
         <i class="bi bi-chevron-right"></i>
@@ -157,9 +143,7 @@
 
     <div class="space-y-4">
 
-      <div
-        *ngFor="let note of notifications"
-        class="bg-gray-50 rounded-xl p-4">
+      <div *ngFor="let note of notifications" class="bg-gray-50 rounded-xl p-4">
 
         <p class="text-sm text-gray-900">
           {{ note.message }}
@@ -203,24 +187,21 @@
     <!-- Grievance List -->
     <div class="space-y-4 mb-6">
 
-      <div
-        *ngFor="let g of grievances"
-        class="bg-gray-50 rounded-xl p-5 flex items-start justify-between">
+      <div *ngFor="let g of grievances" class="bg-gray-50 rounded-xl p-5 flex items-start justify-between">
 
         <div>
           <h3 class="font-semibold text-gray-900">
-            {{ g.title }}
+            {{ g.complainantName }}
           </h3>
           <p class="text-sm text-gray-500 mb-2">
-            {{ g.refId }}
+            {{ g.ticketNumber }}
           </p>
           <p class="text-sm text-gray-600">
             Submitted: {{ g.submittedOn }}
           </p>
         </div>
 
-        <div
-          class="flex items-center gap-2 px-3 py-1 rounded-full border text-sm font-medium"
+        <div class="flex items-center gap-2 px-3 py-1 rounded-full border text-sm font-medium"
           [ngClass]="g.statusClass">
           <i class="bi {{ g.icon }}"></i>
           {{ g.status }}
@@ -231,8 +212,7 @@
     </div>
 
     <!-- CTA -->
-    <button
-      class="w-full py-3 rounded-xl bg-blue-600 text-white font-medium
+    <button class="w-full py-3 rounded-xl bg-blue-600 text-white font-medium
              hover:bg-blue-700 flex items-center justify-center gap-2">
       <i class="bi bi-chat-dots"></i>
       Submit New Grievance
@@ -252,9 +232,7 @@
 
       <div class="space-y-4">
 
-        <div
-          *ngFor="let doc of documents"
-          class="flex items-start justify-between">
+        <div *ngFor="let doc of documents" class="flex items-start justify-between">
 
           <div class="flex items-start gap-3">
             <i class="bi bi-file-earmark-text text-gray-400 text-xl"></i>
