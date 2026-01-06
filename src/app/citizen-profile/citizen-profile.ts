@@ -3,33 +3,30 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { CitizenProfileService } from '../services/citizen-portal-service';
 import { AmigoFormComponent } from '@amigo/amigo-form-renderer';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 type Tab = 'personal' | 'contact' | 'documents' | 'security' | 'notifications';
 
-
 @Component({
   selector: 'app-citizen-profile',
-  standalone:true,
-  imports: [AmigoFormComponent,FormsModule,CommonModule,ReactiveFormsModule],
+  standalone: true,
+  imports: [AmigoFormComponent, FormsModule, CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './citizen-profile.html',
   styleUrl: './citizen-profile.css',
 })
 export class CitizenProfile implements OnInit {
-
-   formIdMap: Record<Tab, string> = {
+  formIdMap: Record<Tab, string> = {
     personal: 'b245b347-60b6-4798-9cb7-04860d9b7393',
     contact: '58d14e21-ab6d-462c-be52-7e3fb1fc8d59',
     documents: '800aeaef-1870-4c92-b0d7-ee1ab12da2d7',
-    security: '2e4c0744-4a7c-4a33-b1ad-ee2dffb23b97 ',
+    security: '2e4c0744-4a7c-4a33-b1ad-ee2dffb23b97',
     notifications: '614593df-46c1-40ca-94c2-9f38be704319',
   };
 
-
-   get currentFormId(): string {
+  get currentFormId(): string {
     return this.formIdMap[this.activeTab];
   }
   onFormSubmitted(event: any) {
-    
     console.log('submitted event:', event);
   }
 
@@ -37,14 +34,13 @@ export class CitizenProfile implements OnInit {
     console.error('submit failed:', err);
   }
 
-
   activeTab: 'personal' | 'contact' | 'documents' | 'security' | 'notifications' = 'personal';
   editMode = {
     personal: false,
     contact: false,
     documents: false,
     security: false,
-    notifications: false
+    notifications: false,
   };
 
   personalForm!: FormGroup;
@@ -52,12 +48,11 @@ export class CitizenProfile implements OnInit {
   passwordForm!: FormGroup;
   notificationForm!: FormGroup;
 
-
-
   fb = inject(FormBuilder);
   profileService = inject(CitizenProfileService);
 
-   ngOnInit(): void {
+  ngOnInit(): void {
+    this.initForms();
     this.loadProfileDetails();
   }
 
@@ -77,20 +72,19 @@ export class CitizenProfile implements OnInit {
 
         this.contactForm.patchValue({
           email: res.data.user.email,
-          mobileNumber:res.data.user.mobileNumber,
-        address1: res.data.user.mandal,   
-        address2: res.data.user.street,    
-        city: res.data.user.village,
-        district: res.data.user.district,
-        pinCode: res.data.user.pinCode,
+          mobileNumber: res.data.user.mobileNumber,
+          address1: res.data.user.mandal,
+          address2: res.data.user.street,
+          city: res.data.user.village,
+          district: res.data.user.district,
+          pinCode: res.data.user.pinCode,
         });
       },
       error: (err) => {
         console.error('Failed to load profile', err);
-      }
+      },
     });
   }
-
 
   private initForms() {
     this.personalForm = this.fb.group({
@@ -148,5 +142,4 @@ export class CitizenProfile implements OnInit {
     // API / amigo-form submit already handled
     this.editMode[tab] = false;
   }
-
 }

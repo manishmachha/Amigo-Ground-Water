@@ -1,59 +1,46 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TokenInterceptor } from '../../interceptors/TokenInterceptor';
+import { AuthService } from '../../services/auth-service';
+import { AmigoFormComponent } from '@amigo/amigo-form-renderer';
+import { AccessControlService } from '../../services/access-control-service';
 
+type LoginMode = 'password' | 'otp';
 @Component({
-  selector: 'app-login-screen',
+  selector: 'app-userlogin-screen',
   standalone: true,
   templateUrl: './login.html',
-  styleUrl: './login.css',
-  imports: [CommonModule,FormsModule,ReactiveFormsModule],
+  styleUrl: './userlogin.css',
+  imports: [AmigoFormComponent],
 })
-export class Login implements OnInit {
-  loginForm!: FormGroup;
-  otpSent = false;
-  selectedRole = 'Citizen';
+export class Login {
+  constructor(private authService: AuthService, private router: Router) {}
 
-  roles = ['Citizen', 'NOC Holder', 'Tanker Supplier', 'Rig Owner'];
+  formId = 'e3346c85-4745-4a9e-9d9f-b4238cbb0778';
+  acl = inject(AccessControlService);
 
-  constructor(private fb: FormBuilder) {}
-
-  ngOnInit(): void {
-    this.loginForm = this.fb.group({
-      mobile: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
-      otp: [''],
-    });
-  }
-
-  sendOtp(): void {
-    if (this.loginForm.get('mobile')?.invalid) {
-      this.loginForm.get('mobile')?.markAsTouched();
-      return;
+  onFormSubmitted(event: any) {
+    // If schema had submitApiUrl => event = { payload, response, action }
+    // Else => event = raw payload (backward compatible)
+    console.log('submitted event:', event);
+    if (event.response.success) {
+      this.authService.setLoginStatus(true);
+      this.authService.setAuthToken(event.response.data.tokens.refreshToken);
+      this.authService.setUserRole(event.response.data.user.role.name);
+      this.acl.me.set({ id: 'u1', name: 'Manish', roleIds: ['r_district_officer'] });
+      this.router.navigate(['/citizen-portal']);
     }
-
-    this.otpSent = true;
-    this.loginForm.get('otp')?.setValidators([Validators.required, Validators.pattern(/^\d{6}$/)]);
-    this.loginForm.get('otp')?.updateValueAndValidity();
   }
 
-  verifyOtp(): void {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-      return;
-    }
-
-    console.log('Login Success', this.loginForm.value, this.selectedRole);
+  onFormSubmitFailed(err: any) {
+    console.error('submit failed:', err);
   }
+  status = 'waiting...';
 
-  changeNumber(): void {
-    this.otpSent = false;
-    this.loginForm.get('otp')?.reset();
-  }
-
-  allowOnlyNumbers(event: KeyboardEvent): void {
-    const charCode = event.which ? event.which : event.keyCode;
-    if (charCode < 48 || charCode > 57) {
-      event.preventDefault();
-    }
+  ngOnInit() {
+    setTimeout(() => {
+      this.status = 'updated ✅';
+    }, 1000);
   }
 }

@@ -1,4 +1,4 @@
-import { ApplicationConfig, inject, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -7,6 +7,7 @@ import { provideAmigoForm } from '@amigo/amigo-form-renderer';
 import { TokenInterceptor } from './interceptors/TokenInterceptor';
 import { LoaderInterceptor } from './interceptors/LoaderInterceptor';
 import { AuthService } from './services/auth-service';
+import { AccessControlService } from './services/access-control-service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,11 +20,12 @@ export const appConfig: ApplicationConfig = {
     provideAmigoForm(
       {
         apiBaseUrl: 'http://3.6.68.94/services/form-builder/forms/single-form',
-        // endpoints: {
-        //   getFormById: (id) => `/services/form-builder/forms/${id}`,
-        // },
       },
-       () => inject(AuthService).getAuthToken()
+      () => inject(AuthService).getAuthToken()
     ),
+    provideAppInitializer(() => {
+      const acl = inject(AccessControlService);
+      acl.loadAccessData(); // subscribe-based; loads fast
+    }),
   ],
 };

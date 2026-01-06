@@ -1,375 +1,473 @@
-<div class="bg-slate-50 p-6">
+<div class="min-h-screen bg-linear-to-b from-sky-50 via-slate-50 to-white">
+  <!-- PAGE CONTAINER -->
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 
-  <!-- HEADER -->
-  <div class="flex items-center justify-between mb-6">
-    <span class="text-blue-600 cursor-pointer text-sm" routerLink="/citizen-portal">← Back to Dashboard</span>
-    <h1 class="text-2xl font-bold text-gray-900">My Profile</h1>
+    <!-- HEADER (sticky) -->
+    <div class="sticky top-0 z-20 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-4
+             bg-white/80 backdrop-blur border-b border-slate-200">
+      <div class="flex items-start sm:items-center justify-between gap-4">
+        <a routerLink="/citizen-portal"
+          class="inline-flex items-center gap-2 text-sm font-medium text-sky-700 hover:text-sky-900">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-sky-50 border border-sky-100">
+            ←
+          </span>
+          <span class="hidden sm:inline">Back to Dashboard</span>
+          <span class="sm:hidden">Back</span>
+        </a>
+
+        <div class="text-right">
+          <h1 class="text-xl sm:text-2xl font-bold text-slate-900">My Profile</h1>
+          <p class="mt-0.5 text-xs sm:text-sm text-slate-500">
+            Manage your personal, contact, documents and preferences
+          </p>
+        </div>
+      </div>
+
+      <!-- TABS (mobile scroll) -->
+      <div class="mt-4">
+        <div class="flex gap-2 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none]
+                 [&::-webkit-scrollbar]:hidden">
+          <!-- helper: tab button styles -->
+          <button (click)="switchTab('personal')" class="shrink-0 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border transition
+                   hover:bg-sky-50 hover:border-sky-200" [ngClass]="activeTab==='personal'
+              ? 'bg-sky-600 text-white border-sky-600 shadow-sm'
+              : 'bg-white text-slate-700 border-slate-200'">
+            <i class="bi bi-person"></i>
+            <span>Personal</span>
+          </button>
+
+          <button (click)="switchTab('contact')" class="shrink-0 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border transition
+                   hover:bg-sky-50 hover:border-sky-200" [ngClass]="activeTab==='contact'
+              ? 'bg-sky-600 text-white border-sky-600 shadow-sm'
+              : 'bg-white text-slate-700 border-slate-200'">
+            <i class="bi bi-telephone"></i>
+            <span>Contact</span>
+          </button>
+
+          <button (click)="switchTab('documents')" class="shrink-0 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border transition
+                   hover:bg-sky-50 hover:border-sky-200" [ngClass]="activeTab==='documents'
+              ? 'bg-sky-600 text-white border-sky-600 shadow-sm'
+              : 'bg-white text-slate-700 border-slate-200'">
+            <i class="bi bi-file-earmark-text"></i>
+            <span>Documents</span>
+          </button>
+
+          <button (click)="switchTab('security')" class="shrink-0 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border transition
+                   hover:bg-sky-50 hover:border-sky-200" [ngClass]="activeTab==='security'
+              ? 'bg-sky-600 text-white border-sky-600 shadow-sm'
+              : 'bg-white text-slate-700 border-slate-200'">
+            <i class="bi bi-lock"></i>
+            <span>Security</span>
+          </button>
+
+          <button (click)="switchTab('notifications')" class="shrink-0 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium border transition
+                   hover:bg-sky-50 hover:border-sky-200" [ngClass]="activeTab==='notifications'
+              ? 'bg-sky-600 text-white border-sky-600 shadow-sm'
+              : 'bg-white text-slate-700 border-slate-200'">
+            <i class="bi bi-bell"></i>
+            <span>Notifications</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT GRID -->
+    <div class="mt-6 sm:mt-8">
+      <!-- ========= PERSONAL ========= -->
+      <div *ngIf="activeTab==='personal'"
+        class="rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-5 sm:p-8">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+            <div>
+              <h2 class="text-base sm:text-lg font-semibold text-slate-900">Personal Information</h2>
+              <p class="text-sm text-slate-500">Basic details as per your profile</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button *ngIf="!editMode.personal" (click)="enableEdit('personal')" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium
+                       border border-sky-200 bg-sky-50 text-sky-700 hover:bg-sky-100 transition">
+                <i class="bi bi-pencil"></i> Edit
+              </button>
+
+              <button *ngIf="editMode.personal" (click)="cancelEdit('personal')" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium
+                       border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition">
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <ng-container *ngIf="!editMode.personal">
+            <form [formGroup]="personalForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <!-- Read-only field look -->
+              <input class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900
+                            outline-none focus:ring-2 focus:ring-sky-200" formControlName="fullName" readonly>
+
+              <input class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900
+                            outline-none focus:ring-2 focus:ring-sky-200" formControlName="dob" readonly>
+
+              <input class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900
+                            outline-none focus:ring-2 focus:ring-sky-200" formControlName="gender" readonly>
+
+              <input class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900
+                            outline-none focus:ring-2 focus:ring-sky-200" formControlName="aadhaar" readonly>
+
+              <input class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900
+                            outline-none focus:ring-2 focus:ring-sky-200" formControlName="pan" readonly>
+            </form>
+          </ng-container>
+
+          <ng-container *ngIf="editMode.personal">
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6">
+              <amigo-form [formId]="currentFormId" (submitted)="onFormSubmitted($event)"
+                (submitFailed)="onFormSubmitFailed($event)">
+              </amigo-form>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- ========= CONTACT ========= -->
+      <div *ngIf="activeTab==='contact'"
+        class="mt-6 rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-5 sm:p-8">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+            <div>
+              <h2 class="text-base sm:text-lg font-semibold text-slate-900">Contact Information</h2>
+              <p class="text-sm text-slate-500">How we can reach you</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button *ngIf="!editMode.contact" (click)="enableEdit('contact')" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium
+                       border border-sky-200 bg-sky-50 text-sky-700 hover:bg-sky-100 transition">
+                <i class="bi bi-pencil"></i> Edit
+              </button>
+
+              <button *ngIf="editMode.contact" (click)="cancelEdit('contact')" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium
+                       border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition">
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <form *ngIf="!editMode.contact" [formGroup]="contactForm"
+            class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            <input class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900
+                          outline-none focus:ring-2 focus:ring-sky-200" formControlName="email" readonly>
+
+            <input class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900
+                          outline-none focus:ring-2 focus:ring-sky-200" formControlName="mobileNumber" readonly>
+
+            <input class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900
+                          outline-none focus:ring-2 focus:ring-sky-200" formControlName="altMobile" readonly>
+
+            <input class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900
+                          outline-none focus:ring-2 focus:ring-sky-200" formControlName="whatsapp" readonly>
+
+            <input class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900
+                          outline-none focus:ring-2 focus:ring-sky-200 sm:col-span-2" formControlName="address1"
+              readonly>
+
+            <input class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900
+                          outline-none focus:ring-2 focus:ring-sky-200 sm:col-span-2" formControlName="address2"
+              readonly>
+          </form>
+
+          <ng-container *ngIf="editMode.contact">
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6">
+              <amigo-form [formId]="currentFormId" (submitted)="saveChanges('contact')"
+                (submitFailed)="onFormSubmitFailed($event)">
+              </amigo-form>
+            </div>
+
+            <div class="flex justify-end mt-5">
+              <button (click)="saveChanges('contact')" class="inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold
+                       bg-sky-600 text-white hover:bg-sky-700 shadow-sm transition">
+                Save Changes
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- ========= DOCUMENTS ========= -->
+      <div *ngIf="activeTab==='documents'"
+        class="mt-6 rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-5 sm:p-8">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+            <div>
+              <h2 class="text-base sm:text-lg font-semibold text-slate-900">Documents</h2>
+              <p class="text-sm text-slate-500">Identity and verification documents</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button *ngIf="!editMode.documents" (click)="enableEdit('documents')" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium
+                       border border-sky-200 bg-sky-50 text-sky-700 hover:bg-sky-100 transition">
+                <i class="bi bi-pencil"></i> Edit
+              </button>
+
+              <button *ngIf="editMode.documents" (click)="cancelEdit('documents')" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium
+                       border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition">
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <div class="grid gap-4">
+            <!-- Doc item -->
+            <div class="rounded-2xl border border-slate-200 p-4 sm:p-5 hover:shadow-sm transition bg-white">
+              <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                  <div
+                    class="h-11 w-11 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+                    <i class="bi bi-file-earmark-text text-emerald-600 text-xl"></i>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-slate-900">Aadhaar Card</p>
+                    <p class="text-sm text-slate-500">Uploaded: 15 Jan 2024</p>
+                  </div>
+                </div>
+                <span
+                  class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                  Verified
+                </span>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 p-4 sm:p-5 hover:shadow-sm transition bg-white">
+              <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                  <div
+                    class="h-11 w-11 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+                    <i class="bi bi-file-earmark-text text-emerald-600 text-xl"></i>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-slate-900">PAN Card</p>
+                    <p class="text-sm text-slate-500">Uploaded: 15 Jan 2024</p>
+                  </div>
+                </div>
+                <span
+                  class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                  Verified
+                </span>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 p-4 sm:p-5 hover:shadow-sm transition bg-white">
+              <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                  <div
+                    class="h-11 w-11 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center">
+                    <i class="bi bi-file-earmark-text text-amber-600 text-xl"></i>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-slate-900">Voter ID</p>
+                    <p class="text-sm text-slate-500">Uploaded: 20 Jan 2024</p>
+                  </div>
+                </div>
+                <span
+                  class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-100">
+                  Pending Verification
+                </span>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 p-4 sm:p-5 bg-slate-50">
+              <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                  <div class="h-11 w-11 rounded-xl bg-white border border-slate-200 flex items-center justify-center">
+                    <i class="bi bi-file-earmark-text text-slate-500 text-xl"></i>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-slate-900">Passport</p>
+                    <p class="text-sm text-slate-500">Not uploaded yet</p>
+                  </div>
+                </div>
+                <span
+                  class="px-3 py-1 rounded-full text-xs font-semibold bg-white text-slate-600 border border-slate-200">
+                  Not Uploaded
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <ng-container *ngIf="editMode.documents">
+            <div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6">
+              <amigo-form [formId]="currentFormId" (submitted)="saveChanges('documents')"
+                (submitFailed)="onFormSubmitFailed($event)">
+              </amigo-form>
+            </div>
+
+            <div class="flex justify-end mt-5">
+              <button (click)="saveChanges('documents')" class="inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold
+                       bg-sky-600 text-white hover:bg-sky-700 shadow-sm transition">
+                Save Changes
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- ========= SECURITY ========= -->
+      <div *ngIf="activeTab==='security'"
+        class="mt-6 rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-5 sm:p-8">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+            <div>
+              <h2 class="text-base sm:text-lg font-semibold text-slate-900">Security</h2>
+              <p class="text-sm text-slate-500">Update your password securely</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button *ngIf="!editMode.security" (click)="enableEdit('security')" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium
+                       border border-sky-200 bg-sky-50 text-sky-700 hover:bg-sky-100 transition">
+                <i class="bi bi-pencil"></i> Edit
+              </button>
+
+              <button *ngIf="editMode.security" (click)="cancelEdit('security')" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium
+                       border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition">
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <form [formGroup]="passwordForm" class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+            <input class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900
+                          outline-none focus:ring-2 focus:ring-sky-200" formControlName="currentPassword"
+              placeholder="Current Password">
+
+            <input class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900
+                          outline-none focus:ring-2 focus:ring-sky-200" formControlName="newPassword"
+              placeholder="New Password">
+
+            <input class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900
+                          outline-none focus:ring-2 focus:ring-sky-200" formControlName="confirmPassword"
+              placeholder="Confirm Password">
+          </form>
+
+          <ng-container *ngIf="editMode.security">
+            <div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6">
+              <amigo-form [formId]="currentFormId" (submitted)="saveChanges('security')"
+                (submitFailed)="onFormSubmitFailed($event)">
+              </amigo-form>
+            </div>
+
+            <div class="flex justify-end mt-5">
+              <button (click)="saveChanges('security')" class="inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold
+                       bg-sky-600 text-white hover:bg-sky-700 shadow-sm transition">
+                Update Password
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- ========= NOTIFICATIONS ========= -->
+      <div *ngIf="activeTab==='notifications'"
+        class="mt-6 rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-5 sm:p-8">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+            <div>
+              <h2 class="text-base sm:text-lg font-semibold text-slate-900">Notifications</h2>
+              <p class="text-sm text-slate-500">Choose how you want to be notified</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button *ngIf="!editMode.notifications" (click)="enableEdit('notifications')" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium
+                       border border-sky-200 bg-sky-50 text-sky-700 hover:bg-sky-100 transition">
+                <i class="bi bi-pencil"></i> Edit
+              </button>
+
+              <button *ngIf="editMode.notifications" (click)="cancelEdit('notifications')" class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium
+                       border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 transition">
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <form *ngIf="!editMode.notifications" [formGroup]="notificationForm" class="space-y-5">
+            <!-- Card -->
+            <div class="rounded-2xl border border-slate-200 p-4 sm:p-5">
+              <p class="font-semibold text-slate-900">Application Updates</p>
+              <p class="text-sm text-slate-500 mt-0.5">Notifications about your NOC/Well applications</p>
+
+              <div class="mt-4 flex flex-wrap gap-3 text-sm">
+                <label
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2 hover:bg-slate-50">
+                  <input class="accent-sky-600" type="checkbox" formControlName="appEmail">
+                  Email
+                </label>
+                <label
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2 hover:bg-slate-50">
+                  <input class="accent-sky-600" type="checkbox" formControlName="appSMS">
+                  SMS
+                </label>
+                <label
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2 hover:bg-slate-50">
+                  <input class="accent-sky-600" type="checkbox" formControlName="appWhatsapp">
+                  WhatsApp
+                </label>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 p-4 sm:p-5">
+              <p class="font-semibold text-slate-900">Payment Reminders</p>
+              <p class="text-sm text-slate-500 mt-0.5">Billing and payment due date reminders</p>
+
+              <div class="mt-4 flex flex-wrap gap-3 text-sm">
+                <label
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2 hover:bg-slate-50">
+                  <input class="accent-sky-600" type="checkbox" formControlName="payEmail">
+                  Email
+                </label>
+                <label
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2 hover:bg-slate-50">
+                  <input class="accent-sky-600" type="checkbox" formControlName="paySMS">
+                  SMS
+                </label>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 p-4 sm:p-5">
+              <p class="font-semibold text-slate-900">Compliance Alerts</p>
+              <p class="text-sm text-slate-500 mt-0.5">Important compliance and regulatory updates</p>
+
+              <div class="mt-4 flex flex-wrap gap-3 text-sm">
+                <label
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2 hover:bg-slate-50">
+                  <input class="accent-sky-600" type="checkbox" formControlName="compEmail">
+                  Email
+                </label>
+                <label
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2 hover:bg-slate-50">
+                  <input class="accent-sky-600" type="checkbox" formControlName="compWhatsapp">
+                  WhatsApp
+                </label>
+                <label
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2 hover:bg-slate-50">
+                  <input class="accent-sky-600" type="checkbox" formControlName="compPortal">
+                  Portal
+                </label>
+              </div>
+            </div>
+          </form>
+
+          <ng-container *ngIf="editMode.notifications">
+            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6">
+              <amigo-form [formId]="currentFormId" (submitted)="onFormSubmitted($event)"
+                (submitFailed)="onFormSubmitFailed($event)">
+              </amigo-form>
+            </div>
+
+            <div class="flex justify-end mt-5">
+              <button (click)="saveChanges('notifications')" class="inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold
+                       bg-sky-600 text-white hover:bg-sky-700 shadow-sm transition">
+                Save Preferences
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
   </div>
-
-  <!-- TABS -->
-  <div class="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white p-1 mb-8">
-    <button (click)="switchTab('personal')" class="px-4 py-2 rounded-full text-sm"
-      [ngClass]="activeTab==='personal' ? 'bg-gray-100 font-semibold' : 'text-gray-600'">
-      <i class="bi bi-person"></i> Personal Info
-    </button>
-
-    <button (click)="switchTab('contact')" class="px-4 py-2 rounded-full text-sm"
-      [ngClass]="activeTab==='contact' ? 'bg-gray-100 font-semibold' : 'text-gray-600'">
-      <i class="bi bi-telephone"></i> Contact
-    </button>
-
-    <button (click)="switchTab('documents')" class="px-4 py-2 rounded-full text-sm"
-      [ngClass]="activeTab==='documents' ? 'bg-gray-100 font-semibold' : 'text-gray-600'">
-      <i class="bi bi-file-earmark-text"></i> Documents
-    </button>
-
-    <button (click)="switchTab('security')" class="px-4 py-2 rounded-full text-sm"
-      [ngClass]="activeTab==='security' ? 'bg-gray-100 font-semibold' : 'text-gray-600'">
-      <i class="bi bi-lock"></i> Security
-    </button>
-
-    <button (click)="switchTab('notifications')" class="px-4 py-2 rounded-full text-sm"
-      [ngClass]="activeTab==='notifications' ? 'bg-gray-100 font-semibold' : 'text-gray-600'">
-      <i class="bi bi-bell"></i> Notifications
-    </button>
-  </div>
-
-  <!-- ================= PERSONAL ================= -->
-    <div *ngIf="activeTab==='personal'" class="bg-white rounded-2xl border p-8">
-
-      <div class="flex justify-between mb-6">
-        <h2 class="text-lg font-semibold">Personal Information</h2>
-
-        <button *ngIf="!editMode.personal" (click)="enableEdit('personal')"
-          class="px-4 py-2 border rounded-lg text-sm">
-          <i class="bi bi-pencil"></i> Edit
-        </button>
-
-        <button *ngIf="editMode.personal" (click)="cancelEdit('personal')"
-          class="px-4 py-2 border rounded-lg text-sm">
-          Cancel
-        </button>
-      </div>
-
-      <ng-container *ngIf="!editMode.personal">
-        <form [formGroup]="personalForm" class="grid md:grid-cols-2 gap-6">
-          <input class="input" formControlName="fullName" readonly>
-          <input class="input" formControlName="dob" readonly>
-          <input class="input" formControlName="gender" readonly>
-          <input class="input" formControlName="aadhaar" readonly>
-          <input class="input" formControlName="pan" readonly>
-        </form>
-      </ng-container>
-
-      <ng-container *ngIf="editMode.personal">
-        <!-- <amigo-form
-          [formId]="currentFormId"
-          (submitted)="saveChanges('personal')"
-          (submitFailed)="onFormSubmitFailed($event)">
-        </amigo-form> -->
-
-        <amigo-form
-         [formId]="currentFormId"
-        (submitted)="onFormSubmitted($event)"
-        (submitFailed)="onFormSubmitFailed($event)"
-        [initialValue]="editMode
-        ">
-      </amigo-form>
-      </ng-container>
-
-    </div>
-
-    <!-- ================= CONTACT ================= -->
-    <div *ngIf="activeTab==='contact'" class="bg-white rounded-2xl border p-8 mt-6">
-
-      <div class="flex justify-between mb-6">
-        <h2 class="text-lg font-semibold">Contact Information</h2>
-
-        <button *ngIf="!editMode.contact" (click)="enableEdit('contact')" class="btn">
-          Edit
-        </button>
-
-        <button *ngIf="editMode.contact" (click)="cancelEdit('contact')" class="btn">
-          Cancel
-        </button>
-      </div>
-
-      <form [formGroup]="contactForm" class="grid md:grid-cols-2 gap-6">
-        <input class="input" formControlName="email" [readonly]="!editMode.contact">
-        <input class="input" formControlName="mobileNumber" [readonly]="!editMode.contact">
-        <input class="input" formControlName="altMobile" [readonly]="!editMode.contact">
-        <input class="input" formControlName="whatsapp" [readonly]="!editMode.contact">
-        <input class="input md:col-span-2" formControlName="address1" [readonly]="!editMode.contact">
-        <input class="input md:col-span-2" formControlName="address2" [readonly]="!editMode.contact">
-      </form>
-
-      <div *ngIf="editMode.contact" class="flex justify-end mt-6">
-        <button (click)="saveChanges('contact')" class="save-btn">Save Changes</button>
-      </div>
-
-      <ng-container *ngIf="editMode.contact">
-        <amigo-form
-          [formId]="currentFormId"
-          (submitted)="saveChanges('contact')"
-          (submitFailed)="onFormSubmitFailed($event)">
-        </amigo-form>
-      </ng-container>
-    </div>
-
-  <!-- ================= DOCUMENTS ================= -->
-  <div *ngIf="activeTab==='documents'" class="bg-white rounded-2xl border p-8 mt-6">
-
-    <div class="flex justify-between mb-6">
-      <h2 class="text-lg font-semibold">Documents</h2>
-
-      <button *ngIf="!editMode.documents" (click)="enableEdit('documents')" class="btn">
-        Edit
-      </button>
-
-      <button *ngIf="editMode.documents" (click)="cancelEdit('documents')" class="btn">
-        Cancel
-      </button>
-    </div>
-    
-<h2 class="text-lg font-semibold text-gray-900 mb-6">
-    Identity Documents
-  </h2>
-
-  <!-- Aadhaar -->
-  <div class="flex items-center justify-between border border-gray-200 rounded-xl p-4 mb-4">
-    <div class="flex items-center gap-4">
-      <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
-        <i class="bi bi-file-earmark-text text-green-600 text-xl"></i>
-      </div>
-      <div>
-        <p class="font-medium text-gray-900">Aadhaar Card</p>
-        <p class="text-sm text-gray-500">Uploaded: 15 Jan 2024</p>
-      </div>
-    </div>
-
-    <div class="flex items-center gap-4">
-      <span class="px-3 py-1 rounded-full text-xs bg-green-100 text-green-700">
-        Verified
-      </span>
-      <button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm">
-        <i class="bi bi-upload"></i> Replace
-      </button>
-    </div>
-  </div>
-
-  <!-- PAN -->
-  <div class="flex items-center justify-between border border-gray-200 rounded-xl p-4 mb-4">
-    <div class="flex items-center gap-4">
-      <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
-        <i class="bi bi-file-earmark-text text-green-600 text-xl"></i>
-      </div>
-      <div>
-        <p class="font-medium text-gray-900">PAN Card</p>
-        <p class="text-sm text-gray-500">Uploaded: 15 Jan 2024</p>
-      </div>
-    </div>
-
-    <div class="flex items-center gap-4">
-      <span class="px-3 py-1 rounded-full text-xs bg-green-100 text-green-700">
-        Verified
-      </span>
-      <button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm">
-        <i class="bi bi-upload"></i> Replace
-      </button>
-    </div>
-  </div>
-
-  <!-- Voter ID -->
-  <div class="flex items-center justify-between border border-gray-200 rounded-xl p-4 mb-4">
-    <div class="flex items-center gap-4">
-      <div class="w-12 h-12 rounded-lg bg-yellow-100 flex items-center justify-center">
-        <i class="bi bi-file-earmark-text text-yellow-600 text-xl"></i>
-      </div>
-      <div>
-        <p class="font-medium text-gray-900">Voter ID</p>
-        <p class="text-sm text-gray-500">Uploaded: 20 Jan 2024</p>
-      </div>
-    </div>
-
-    <div class="flex items-center gap-4">
-      <span class="px-3 py-1 rounded-full text-xs bg-yellow-100 text-yellow-700">
-        Pending Verification
-      </span>
-      <button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm">
-        <i class="bi bi-upload"></i> Replace
-      </button>
-    </div>
-  </div>
-
-  <!-- Passport -->
-  <div class="flex items-center justify-between border border-gray-200 rounded-xl p-4">
-    <div class="flex items-center gap-4">
-      <div class="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center">
-        <i class="bi bi-file-earmark-text text-gray-500 text-xl"></i>
-      </div>
-      <div>
-        <p class="font-medium text-gray-900">Passport</p>
-        <p class="text-sm text-gray-500">Not uploaded yet</p>
-      </div>
-    </div>
-
-    <div class="flex items-center gap-4">
-      <span class="px-3 py-1 rounded-full text-xs bg-gray-100 text-gray-600">
-        Not Uploaded
-      </span>
-      <button class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-sm">
-        <i class="bi bi-upload"></i> Upload
-      </button>
-    </div>
-  </div>
-    <div *ngIf="editMode.documents" class="flex justify-end">
-      <button (click)="saveChanges('documents')" class="save-btn">Save Changes</button>
-    </div>
-
-    <ng-container *ngIf="editMode.documents">
-      <amigo-form
-         [formId]="currentFormId"
-        (submitted)="saveChanges('documents')"
-        (submitFailed)="onFormSubmitFailed($event)">
-      </amigo-form>
-    </ng-container>
-  </div>
-
-  <!-- ================= SECURITY ================= -->
-  <div *ngIf="activeTab==='security'" class="bg-white rounded-2xl border p-8 mt-6">
-
-    <div class="flex justify-between mb-6">
-      <h2 class="text-lg font-semibold">Change Password</h2>
-
-      <button *ngIf="!editMode.security" (click)="enableEdit('security')" class="btn">
-        Edit
-      </button>
-
-      <button *ngIf="editMode.security" (click)="cancelEdit('security')" class="btn">
-        Cancel
-      </button>
-    </div>
-
-    <form [formGroup]="passwordForm" class="space-y-6">
-      <input class="input" formControlName="currentPassword" placeholder="Current Password">
-      <input class="input" formControlName="newPassword" placeholder="New Password">
-      <input class="input" formControlName="confirmPassword" placeholder="Confirm Password">
-    </form>
-
-    <div *ngIf="editMode.security" class="flex justify-end mt-6">
-      <button (click)="saveChanges('security')" class="save-btn">Update Password</button>
-    </div>
-    <ng-container *ngIf="editMode.security">
-      <amigo-form
-         [formId]="currentFormId"
-        (submitted)="saveChanges('security')"
-        (submitFailed)="onFormSubmitFailed($event)">
-      </amigo-form>
-    </ng-container>
-  </div>
-
-  <!-- ================= NOTIFICATIONS ================= -->
-  <div *ngIf="activeTab==='notifications'" class="bg-white rounded-2xl border p-8 mt-6">
-
-    <div class="flex justify-between mb-6">
-      <h2 class="text-lg font-semibold">Notifications</h2>
-
-      <button *ngIf="!editMode.notifications" (click)="enableEdit('notifications')" class="btn">
-        Edit
-      </button>
-
-      <button *ngIf="editMode.notifications" (click)="cancelEdit('notifications')" class="btn">
-        Cancel
-      </button>
-    </div>
-
-    <form [formGroup]="notificationForm" class="space-y-4">
-      <div>
-      <p class="font-medium text-gray-900">
-        Application Updates
-      </p>
-      <p class="text-sm text-gray-500 mb-3">
-        Notifications about your NOC/Well applications
-      </p>
-
-      <div class="flex items-center gap-6 text-sm">
-        <label class="flex items-center gap-2">
-          <input type="checkbox" formControlName="appEmail">
-          Email
-        </label>
-        <label class="flex items-center gap-2">
-          <input type="checkbox" formControlName="appSMS">
-          SMS
-        </label>
-        <label class="flex items-center gap-2">
-          <input type="checkbox" formControlName="appWhatsapp">
-          WhatsApp
-        </label>
-      </div>
-    </div>
-
-    <hr>
-
-    <!-- Payment Reminders -->
-    <div>
-      <p class="font-medium text-gray-900">
-        Payment Reminders
-      </p>
-      <p class="text-sm text-gray-500 mb-3">
-        Billing and payment due date reminders
-      </p>
-
-      <div class="flex items-center gap-6 text-sm">
-        <label class="flex items-center gap-2">
-          <input type="checkbox" formControlName="payEmail">
-          Email
-        </label>
-        <label class="flex items-center gap-2">
-          <input type="checkbox" formControlName="paySMS">
-          SMS
-        </label>
-      </div>
-    </div>
-
-    <hr>
-
-    <!-- Compliance Alerts -->
-    <div>
-      <p class="font-medium text-gray-900">
-        Compliance Alerts
-      </p>
-      <p class="text-sm text-gray-500 mb-3">
-        Important compliance and regulatory updates
-      </p>
-
-      <div class="flex items-center gap-6 text-sm">
-        <label class="flex items-center gap-2">
-          <input type="checkbox" formControlName="compEmail">
-          Email
-        </label>
-        <label class="flex items-center gap-2">
-          <input type="checkbox" formControlName="compWhatsapp">
-          WhatsApp
-        </label>
-        <label class="flex items-center gap-2">
-          <input type="checkbox" formControlName="compPortal">
-          Portal
-        </label>
-      </div>
-    </div>
-    </form>
-
-    <div *ngIf="editMode.notifications" class="flex justify-end mt-6">
-      <button (click)="saveChanges('notifications')" class="save-btn">Save Preferences</button>
-    </div>
-
-     <ng-container *ngIf="editMode.notifications">
-      <amigo-form
-         [formId]="currentFormId"
-        (submitted)="onFormSubmitted($event)"
-        (submitFailed)="onFormSubmitFailed($event)">
-      </amigo-form>
-    </ng-container>
-  </div>
-
 </div>

@@ -87,7 +87,8 @@
         </p>
       </div>
 
-      <a class="text-blue-600 font-medium cursor-pointer hover:underline" (click)="toggleViewAll()">
+      <a
+        class="text-blue-600 font-medium cursor-pointer hover:underline" (click)="toggleViewAll()">
         {{ showAllApplications ? 'View Less' : 'View All' }}
       </a>
 
@@ -95,7 +96,7 @@
 
     <!-- Application List -->
     <div class="space-y-4 transition-all duration-300"
-      [ngClass]="showAllApplications ? 'max-h-[420px] overflow-y-auto pr-2' : ''">
+      [ngClass]="showAllApplications ? 'max-h-105 overflow-y-auto pr-2' : ''">
 
       <div *ngFor="let app of visibleApplications()" class="bg-gray-50 rounded-xl p-5 flex items-start justify-between">
 
@@ -115,9 +116,7 @@
         </div>
 
         <!-- Status -->
-        <div class="flex items-center gap-2 px-3 py-1 rounded-full border text-sm font-medium"
-          [ngClass]="app.statusColor">
-          <i class="bi {{ app.icon }}"></i>
+        <div class="px-3 py-1 rounded-full border border-gray-300 text-sm font-medium">
           {{ app.status }}
         </div>
 
@@ -191,7 +190,7 @@
 
     <!-- Grievance List -->
     <div class="space-y-4 transition-all duration-300"
-      [ngClass]="showAllGrievances ? 'max-h-[420px] overflow-y-auto pr-2' : ''">
+      [ngClass]="showAllGrievances ? 'max-h-105 overflow-y-auto pr-2' : ''">
 
       <div *ngFor="let g of visibleGrievances()" class="bg-gray-50 rounded-xl p-5 flex items-start justify-between">
 
@@ -207,9 +206,7 @@
           </p>
         </div>
 
-        <div class="flex items-center gap-2 px-3 py-1 rounded-full border text-sm font-medium"
-          [ngClass]="g.statusClass">
-          <i class="bi {{ g.icon }}"></i>
+        <div class="px-3 py-1 rounded-full border border-gray-300 text-sm font-medium">
           {{ g.status }}
         </div>
 
