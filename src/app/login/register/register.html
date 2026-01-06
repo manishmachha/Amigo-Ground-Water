@@ -1,0 +1,46 @@
+<div class="min-h-screen bg-gray-50">
+
+    <header class="bg-white border-b border-gray-200 sticky shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-4 sm:h-16">
+
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center">
+                        <i class="bi bi-droplet text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">New Registration</h1>
+                        <p class="text-xs text-gray-600">TG-GWRMS registration</p>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 text-sm">
+                    <button class="border border-gray-200 rounded-lg px-3 py-2">
+                        <i class="bi bi-house"></i> Home
+                    </button>
+                    <div routerLink="/login/user-login"
+                        class="text-blue-700 cursor-pointer text-center sm:text-left text-xl">
+                        Already have an account? Login
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Title -->
+    <div class="text-center mt-10">
+        <h1 class="text-3xl font-semibold">Create Your Account</h1>
+        <p class="text-gray-500 mt-2">
+            Register to access TG-GWRMS services and track your applications
+        </p>
+    </div>
+
+
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow p-8">
+        <amigo-form [formId]="formId" (submitted)="onFormSubmitted($event)"
+            (submitFailed)="onFormSubmitFailed($event)"></amigo-form>
+    </div>

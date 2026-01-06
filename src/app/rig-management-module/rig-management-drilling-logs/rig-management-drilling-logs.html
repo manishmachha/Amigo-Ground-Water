@@ -1,0 +1,162 @@
+<div class="p-6 space-y-4">
+
+  <!-- HEADER -->
+  <div class="flex items-center justify-between">
+    <h3 class="text-xl font-semibold text-gray-900">
+      Mandatory Drilling Logs (Per Well Drilled)
+    </h3>
+
+    <button
+      class="inline-flex items-center gap-2 px-4 py-2 rounded-md
+             bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium">
+      <i class="bi bi-clipboard-check"></i>
+      Submit Drilling Log
+    </button>
+  </div>
+
+  <!-- WARNING -->
+  <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+    <p class="text-lg text-amber-800">
+      <strong>Mandatory Requirement:</strong>
+      Every well drilled must have a corresponding log entry within 24 hours.
+      Failure to comply results in automatic violation.
+    </p>
+  </div>
+
+  <!-- TABLE -->
+  <div class="overflow-x-auto">
+
+    <table mat-table [dataSource]="dataSource" matSort class="w-full text-sm">
+
+      <!-- Log ID -->
+      <ng-container matColumnDef="logId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Log ID
+        </th>
+        <td mat-cell *matCellDef="let row"
+            class="font-mono font-medium text-gray-600">
+          {{ row.logId }}
+        </td>
+      </ng-container>
+
+      <!-- Rig ID -->
+      <ng-container matColumnDef="rigId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Rig ID
+        </th>
+        <td mat-cell *matCellDef="let row"
+            class="font-mono text-blue-600">
+          {{ row.rigId }}
+        </td>
+      </ng-container>
+
+      <!-- Well ID -->
+      <ng-container matColumnDef="wellId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Well ID
+        </th>
+        <td mat-cell *matCellDef="let row"
+            class="font-mono text-gray-700">
+          {{ row.wellId }}
+        </td>
+      </ng-container>
+
+      <!-- Owner -->
+      <ng-container matColumnDef="owner">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Owner
+        </th>
+        <td mat-cell *matCellDef="let row" class="text-gray-900">
+          {{ row.owner }}
+        </td>
+      </ng-container>
+
+      <!-- Location -->
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Location
+        </th>
+        <td mat-cell *matCellDef="let row" class="text-gray-700">
+          {{ row.location }}
+        </td>
+      </ng-container>
+
+      <!-- Depth -->
+      <ng-container matColumnDef="depth">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Depth
+        </th>
+        <td mat-cell *matCellDef="let row" class="text-gray-700">
+          {{ row.depth }}
+        </td>
+      </ng-container>
+
+      <!-- Date -->
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Date
+        </th>
+        <td mat-cell *matCellDef="let row" class="text-gray-600">
+          {{ row.date }}
+        </td>
+      </ng-container>
+
+      <!-- Status -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Status
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <span
+            class="px-2 py-0.5 rounded-md text-xs font-medium"
+            [ngClass]="getStatusClass(row.status)">
+            {{ row.status }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="text-right">
+          Actions
+        </th>
+        <td mat-cell *matCellDef="let row" class="text-right align-middle">
+
+          <!-- View -->
+          <button
+            *ngIf="row.status === 'Submitted'"
+            class="p-2 rounded-md hover:bg-gray-100">
+            <i class="bi bi-eye"></i>
+          </button>
+
+          <!-- Flag Violation -->
+          <button
+            *ngIf="row.status === 'Missing'"
+            class="px-3 py-1.5 rounded-md bg-red-600 hover:bg-red-700
+                   text-white text-sm font-medium">
+            Flag Violation
+          </button>
+
+        </td>
+      </ng-container>
+
+      <!-- ROWS -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [ngClass]="{ 'bg-red-50': isMissing(row) }">
+      </tr>
+
+    </table>
+
+    <!-- PAGINATION -->
+    <mat-paginator
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons>
+    </mat-paginator>
+
+  </div>
+</div>

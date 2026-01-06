@@ -1,0 +1,132 @@
+<div class="p-6 space-y-4">
+
+  <!-- HEADER -->
+  <div class="flex items-center justify-between">
+    <h3 class="text-xl font-semibold text-gray-900">
+      Rig Movement Declarations & GPS Tracking
+    </h3>
+
+    <button
+      class="inline-flex items-center gap-2 px-4 py-2 rounded-md
+             bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium">
+      <i class="bi bi-signpost-split"></i>
+      Declare Movement
+    </button>
+  </div>
+
+  <!-- NOTE -->
+  <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+    <p class="text-lg text-blue-800">
+      <strong>Note:</strong>
+      All rig movements across mandals must be declared in advance to prevent illegal drilling operations.
+    </p>
+  </div>
+
+  <!-- TABLE -->
+  <div class="overflow-x-auto">
+
+    <table mat-table [dataSource]="dataSource" matSort class="w-full">
+
+      <!-- Rig ID -->
+      <ng-container matColumnDef="rigId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Rig ID
+        </th>
+        <td mat-cell *matCellDef="let row"
+            class="font-medium text-blue-600">
+          {{ row.rigId }}
+        </td>
+      </ng-container>
+
+      <!-- Owner -->
+      <ng-container matColumnDef="owner">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Owner
+        </th>
+        <td mat-cell *matCellDef="let row" class="text-gray-900">
+          {{ row.owner }}
+        </td>
+      </ng-container>
+
+      <!-- From -->
+      <ng-container matColumnDef="from">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          From
+        </th>
+        <td mat-cell *matCellDef="let row" class="text-gray-700">
+          {{ row.from }}
+        </td>
+      </ng-container>
+
+      <!-- To -->
+      <ng-container matColumnDef="to">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          To
+        </th>
+        <td mat-cell *matCellDef="let row" class="text-gray-700">
+          {{ row.to }}
+        </td>
+      </ng-container>
+
+      <!-- Movement Date -->
+      <ng-container matColumnDef="movementDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Movement Date
+        </th>
+        <td mat-cell *matCellDef="let row" class="text-gray-600">
+          {{ row.movementDate }}
+        </td>
+      </ng-container>
+
+      <!-- Status -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Status
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <span
+            class="px-2 py-0.5 rounded-md text-xs font-medium"
+            [ngClass]="getStatusClass(row.status)">
+            {{ row.status }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="text-right">
+          Actions
+        </th>
+        <td mat-cell *matCellDef="let row" class="text-right align-middle">
+          <button
+            class="inline-flex items-center gap-1 px-3 py-1.5 rounded-md
+                   hover:bg-gray-100 text-sm">
+            <i class="bi bi-geo-alt"></i>
+            Track
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- ROWS -->
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns">
+      </tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [ngClass]="{ 'bg-red-50': isUnauthorized(row) }">
+      </tr>
+
+    </table>
+
+    <!-- PAGINATION -->
+    <mat-paginator
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons>
+    </mat-paginator>
+
+  </div>
+</div>

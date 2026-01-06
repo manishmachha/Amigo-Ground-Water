@@ -1,0 +1,262 @@
+<div class="bg-slate-50 ">
+
+  <!-- HEADER -->
+  <div class="bg-white border-b border-gray-200">
+    <div class="max-w-12xl mx-auto px-6 py-6 flex items-center justify-between">
+
+      <!-- Title -->
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+        <p class="text-gray-500 text-sm">
+          Welcome back, here's what's happening today
+        </p>
+      </div>
+
+      <!-- CTA -->
+      <button
+        class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5
+               text-sm font-medium text-white shadow hover:bg-blue-700 transition">
+        <i class="bi bi-file-earmark-plus"></i>
+        New Application
+      </button>
+
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="max-w-12xl mx-auto px-6 py-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      <!-- TOTAL NOCs -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
+          <i class="bi bi-file-earmark-text text-xl"></i>
+        </div>
+        <p class="text-xs font-medium text-gray-500 uppercase mb-2">
+          Total NOCs
+        </p>
+        <h2 class="text-3xl font-bold text-gray-900">1,247</h2>
+      </div>
+
+      <!-- PENDING APPLICATIONS -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-100 text-yellow-600">
+          <i class="bi bi-clock text-xl"></i>
+        </div>
+        <p class="text-xs font-medium text-gray-500 uppercase mb-2">
+          Pending Applications
+        </p>
+        <h2 class="text-3xl font-bold text-gray-900">89</h2>
+      </div>
+
+      <!-- RENEWALS -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-red-100 text-red-600">
+          <i class="bi bi-exclamation-triangle text-xl"></i>
+        </div>
+        <p class="text-xs font-medium text-gray-500 uppercase mb-2">
+          Renewals in 90 Days
+        </p>
+        <h2 class="text-3xl font-bold text-gray-900">34</h2>
+      </div>
+
+      <!-- APPROVED -->
+      <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-green-600">
+          <i class="bi bi-check-circle text-xl"></i>
+        </div>
+        <p class="text-xs font-medium text-gray-500 uppercase mb-2">
+          Approved This Month
+        </p>
+        <h2 class="text-3xl font-bold text-gray-900">23</h2>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="max-w-12xl mx-auto px-6 pb-16">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+    <!-- Applications by Category -->
+    <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900">
+            Applications by Category
+          </h3>
+          <p class="text-sm text-gray-500">
+            Distribution across project types
+          </p>
+        </div>
+        <i class="bi bi-building text-gray-400 text-xl"></i>
+      </div>
+
+      <div class="space-y-6">
+
+        <div *ngFor="let c of applicationCategories">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-medium text-gray-900">
+              {{ c.name }}
+            </span>
+            <span
+              class="px-2 py-0.5 rounded-full text-xs font-medium
+                     bg-blue-50 text-blue-600">
+              {{ c.value }}
+            </span>
+          </div>
+
+          <div class="w-full h-2 rounded-full bg-gray-200 overflow-hidden">
+            <div
+              class="h-2 bg-gray-900 rounded-full"
+              [style.width.%]="c.percent">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- District-wise NOC Summary -->
+    <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900">
+            District-wise NOC Summary
+          </h3>
+          <p class="text-sm text-gray-500">
+            NOCs by district and risk category
+          </p>
+        </div>
+        <i class="bi bi-droplet text-gray-400 text-xl"></i>
+      </div>
+
+      <div class="overflow-hidden rounded-xl border border-gray-200">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-50 text-gray-600">
+            <tr>
+              <th class="px-4 py-3 text-left font-medium">District</th>
+              <th class="px-4 py-3 text-left font-medium">Total NOCs</th>
+              <th class="px-4 py-3 text-right font-medium">In Critical/OE</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y">
+
+            <tr *ngFor="let d of districtSummary">
+              <td class="px-4 py-3 font-medium text-gray-900">
+                {{ d.district }}
+              </td>
+              <td class="px-4 py-3">
+                {{ d.total }}
+              </td>
+              <td class="px-4 py-3 text-right">
+                <span
+                  class="inline-flex items-center justify-center
+                         min-w-[32px] px-2 py-0.5 rounded-full text-xs font-semibold"
+                  [ngClass]="
+                    d.critical > 10
+                      ? 'bg-red-600 text-white'
+                      : 'bg-gray-100 text-gray-800'
+                  ">
+                  {{ d.critical }}
+                </span>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="max-w-12xl mx-auto px-6 pb-16">
+
+  <!-- Section Header -->
+  <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+
+    <h2 class="text-lg font-semibold text-gray-900">
+      Quick Actions
+    </h2>
+    <p class="text-sm text-gray-500 mb-8">
+      Common tasks and workflows
+    </p>
+
+    <!-- Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- View All Applications -->
+      <div
+        class="relative bg-white rounded-2xl border border-gray-200 p-6
+               hover:shadow-md transition cursor-pointer">
+
+        <!-- Arrow -->
+        <i class="bi bi-arrow-up-right absolute top-6 right-6 text-gray-400"></i>
+
+        <!-- Icon -->
+        <div class="mb-4 text-blue-600">
+          <i class="bi bi-file-earmark-text text-3xl"></i>
+        </div>
+
+        <!-- Content -->
+        <h3 class="text-lg font-semibold text-gray-900 mb-1">
+          View All Applications
+        </h3>
+        <p class="text-sm text-gray-600">
+          Browse and manage NOC applications
+        </p>
+      </div>
+
+      <!-- Apply for New NOC -->
+      <div
+        class="relative bg-white rounded-2xl border border-gray-200 p-6
+               hover:shadow-md transition cursor-pointer">
+
+        <!-- Arrow -->
+        <i class="bi bi-arrow-up-right absolute top-6 right-6 text-gray-400"></i>
+
+        <!-- Icon -->
+        <div class="mb-4 text-blue-600">
+          <i class="bi bi-graph-up-arrow text-3xl"></i>
+        </div>
+
+        <!-- Content -->
+        <h3 class="text-lg font-semibold text-gray-900 mb-1">
+          Apply for New NOC
+        </h3>
+        <p class="text-sm text-gray-600">
+          Submit a new NOC application
+        </p>
+      </div>
+
+      <!-- NOC Renewals -->
+      <div
+        class="relative bg-white rounded-2xl border border-gray-200 p-6
+               hover:shadow-md transition cursor-pointer">
+
+        <!-- Arrow -->
+        <i class="bi bi-arrow-up-right absolute top-6 right-6 text-gray-400"></i>
+
+        <!-- Icon -->
+        <div class="mb-4 text-blue-600">
+          <i class="bi bi-clock text-3xl"></i>
+        </div>
+
+        <!-- Content -->
+        <h3 class="text-lg font-semibold text-gray-900 mb-1">
+          NOC Renewals
+        </h3>
+        <p class="text-sm text-gray-600">
+          Manage upcoming renewals
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</div>

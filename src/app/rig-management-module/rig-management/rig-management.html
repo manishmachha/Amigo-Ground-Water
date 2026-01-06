@@ -1,0 +1,152 @@
+<div class="bg-gray-50 min-h-screen">
+
+  <!-- HEADER -->
+  <div class="bg-white px-4 sm:px-6 lg:px-8 py-5">
+    <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
+
+      <!-- TITLE -->
+      <div>
+        <h1 class="text-2xl sm:text-2xl font-medium text-gray-900">
+          Rig Management
+        </h1>
+        <p class="text-sm text-gray-500 mt-1">
+          WALTA Form-15 & Form-16 compliance, movement tracking, and drilling logs
+        </p>
+      </div>
+
+      <!-- ACTION BUTTONS -->
+      <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+        <button
+          class="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium
+                 border border-gray-200 rounded-lg w-full sm:w-auto">
+          <i class="bi bi-download"></i> Export
+        </button>
+
+        <button
+          class="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium
+                 rounded-lg bg-blue-600 text-white w-full sm:w-auto">
+          <i class="bi bi-droplet"></i> Register New Rig
+        </button>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 mt-6">
+
+      <input
+        type="text"
+        class="border border-gray-200 px-3 py-2 rounded-lg w-full sm:w-72"
+        placeholder="Search by rig id">
+
+      <select
+        class="border border-gray-200 rounded-lg px-3 py-2 w-full sm:w-48">
+        <option>All Districts</option>
+        <option>AP</option>
+        <option>TS</option>
+        <option>UP</option>
+        <option>KA</option>
+      </select>
+
+      <button
+        class="flex items-center justify-center gap-2 px-4 py-2
+               border border-gray-200 rounded-lg w-full sm:w-auto">
+        <i class="bi bi-funnel"></i> More Filters
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="p-4 sm:p-6 lg:p-8">
+
+    <!-- STATS -->
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6 mb-8">
+
+      <div
+        *ngFor="let s of stats"
+        class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-lg transition">
+
+        <div
+          class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+          [ngClass]="s.bg">
+          <i class="bi text-xl" [ngClass]="[s.icon, s.color]"></i>
+        </div>
+
+        <p class="text-xs uppercase text-gray-500 font-medium">
+          {{ s.title }}
+        </p>
+
+        <p class="text-2xl sm:text-2xl font-medium text-gray-900 mt-2">
+          {{ s.value }}
+        </p>
+
+        <p class="text-xs text-gray-500 mt-1">
+          {{ s.sub }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS + ROUTER -->
+  <div class="bg-white rounded-xl border border-gray-200 mx-4 sm:mx-6 lg:mx-8 mb-8">
+
+    <div class="px-4 sm:px-6 py-6">
+
+      <!-- TABS (SCROLLABLE ON MOBILE) -->
+      <div class="overflow-x-auto">
+        <div
+          class="min-w-max flex gap-1 rounded-md bg-gray-100 p-1 text-gray-500 text-sm sm:text-xl">
+
+          <button
+            class="font-medium py-1.5 px-3 rounded-sm whitespace-nowrap
+                   inline-flex justify-center items-center"
+            routerLink="overview"
+            routerLinkActive="bg-white text-black">
+            Overview
+          </button>
+
+          <button
+            class="font-medium py-1.5 px-3 rounded-sm whitespace-nowrap"
+            routerLink="registration"
+            routerLinkActive="bg-white text-black">
+            Registration & List
+          </button>
+
+          <button
+            class="font-medium py-1.5 px-3 rounded-sm whitespace-nowrap"
+            routerLink="movement"
+            routerLinkActive="bg-white text-black">
+            Movement Tracking
+          </button>
+
+          <button
+            class="font-medium py-1.5 px-3 rounded-sm whitespace-nowrap"
+            routerLink="drilling"
+            routerLinkActive="bg-white text-black">
+            Drilling Logs
+          </button>
+
+          <button
+            class="font-medium py-1.5 px-3 rounded-sm whitespace-nowrap"
+            routerLink="violation"
+            routerLinkActive="bg-white text-black">
+            Violations & Offences
+          </button>
+
+          <button
+            class="font-medium py-1.5 px-3 rounded-sm whitespace-nowrap"
+            routerLink="compliance"
+            routerLinkActive="bg-white text-black">
+            Compliance & Renewals
+          </button>
+        </div>
+      </div>
+
+      <!-- ROUTER CONTENT -->
+      <div class="mt-6">
+        <router-outlet></router-outlet>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="p-6">
+
+    <h3 class="text-xl font-medium text-gray-900 mb-4">
+        District-wise Operations Overview
+    </h3>
+
+    <!-- TABLE -->
+    <div class="overflow-x-auto text-xl">
+
+        <table mat-table [dataSource]="dataSource" matSort class="w-full">
+
+            <!-- District -->
+            <ng-container matColumnDef="district">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    District
+                </th>
+                <td mat-cell *matCellDef="let row" class="font-medium text-gray-900 ">
+                    {{ row.district }}
+                </td>
+            </ng-container>
+
+            <!-- Total Rigs -->
+            <ng-container matColumnDef="totalRigs">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-right">
+                    Total Rigs
+                </th>
+                <td mat-cell *matCellDef="let row" class="text-right">
+                    {{ row.totalRigs }}
+                </td>
+            </ng-container>
+
+            <!-- Active -->
+            <ng-container matColumnDef="active">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-right">
+                    Active
+                </th>
+                <td mat-cell *matCellDef="let row" class="text-right">
+                    <span class="badge badge-green">
+                        {{ row.active }}
+                    </span>
+                </td>
+            </ng-container>
+
+            <!-- Drilling Today -->
+            <ng-container matColumnDef="drillingToday">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-right">
+                    Drilling Today
+                </th>
+                <td mat-cell *matCellDef="let row" class="text-right">
+                    <span class="badge badge-purple">
+                        {{ row.drillingToday }}
+                    </span>
+                </td>
+            </ng-container>
+
+            <!-- Violations -->
+            <ng-container matColumnDef="violations">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-right">
+                    Violations
+                </th>
+                <td mat-cell *matCellDef="let row" class="text-right">
+                    <span class="badge badge-red">
+                        {{ row.violations }}
+                    </span>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+
+        <!-- PAGINATION -->
+        <mat-paginator [pageSize]="5" [pageSizeOptions]=" [  5, 10, 20]" showFirstLastButtons>
+        </mat-paginator>
+
+    </div>
+</div>

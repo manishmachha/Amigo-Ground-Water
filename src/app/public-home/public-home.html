@@ -1,0 +1,333 @@
+<div class="min-h-screen bg-gradient-to-r from-blue-600 to-teal-600 text-white">
+
+    <!-- HEADER -->
+    <header class="bg-white text-gray-800">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white">
+                    <i class="bi bi-droplet-half text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg">TG-GWRMS</h1>
+                    <p class="text-xs text-gray-500">Telangana Groundwater Portal</p>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-3">
+                <button  routerLink="/user-login"
+                 class="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium hover:bg-gray-100">
+                    Login
+                </button>
+                <button  routerLink="/login/register-screen"
+                class="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+                    Register
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+        <!-- LEFT CONTENT -->
+        <div class="flex flex-col justify-center">
+            <span class="inline-block mb-4 px-4 py-1 text-sm rounded-full bg-white/20 w-fit">
+                Public Portal
+            </span>
+
+            <h2 class="text-4xl font-bold leading-tight mb-4">
+                Telangana Groundwater Resources<br />
+                Management System
+            </h2>
+
+            <p class="text-lg text-white/90 mb-8 max-w-xl">
+                Access groundwater data, apply for NOC, track applications,
+                and report violations.
+            </p>
+
+            <div class="flex gap-4">
+                <button
+                    class="flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-blue-600 font-semibold hover:bg-gray-100">
+                    <i class="bi bi-file-earmark-text"></i>
+                    Apply for NOC
+                </button>
+
+                <button class="px-6 py-3 rounded-lg bg-white/20 text-white font-semibold hover:bg-white/30">
+                    <i class="bi bi-water"></i>
+
+                    View water status
+                </button>
+            </div>
+        </div>
+
+        <!-- RIGHT STATS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+            <!-- Card 1 -->
+            <div class="bg-white/15 backdrop-blur rounded-2xl p-6 shadow-lg">
+                <i class="bi bi-file-earmark-text text-3xl mb-4 block"></i>
+                <h3 class="text-3xl font-bold">2,847</h3>
+                <p class="text-white/80 mt-1">Active NOCs</p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white/15 backdrop-blur rounded-2xl p-6 shadow-lg">
+                <i class="bi bi-water text-3xl mb-4 block"></i>
+                <h3 class="text-3xl font-bold">14,235</h3>
+                <p class="text-white/80 mt-1">Registered Wells</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white/15 backdrop-blur rounded-2xl p-6 shadow-lg">
+                <i class="bi bi-thermometer-half text-3xl mb-4 block"></i>
+                <h3 class="text-3xl font-bold">89%</h3>
+                <p class="text-white/80 mt-1">Safe Quality</p>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="bg-white/15 backdrop-blur rounded-2xl p-6 shadow-lg">
+                <i class="bi bi-shield-check text-3xl mb-4 block"></i>
+                <h3 class="text-3xl font-bold">98%</h3>
+                <p class="text-white/80 mt-1">Compliance Rate</p>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+<div class="bg-slate-50-screen px-6 py-10">
+
+    <!-- SEARCH BAR -->
+    <div class="max-w-4xl mx-auto mb-12">
+        <div class="relative">
+            <i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input type="text" [(ngModel)]="searchText"
+                placeholder="Search for NOC application, well registration, or district information..." class="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-300 shadow-sm" />
+        </div>
+    </div>
+
+    <!-- ACTION CARDS -->
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+        <div *ngFor="let action of quickActions" class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm
+             hover:shadow-md transition">
+
+            <!-- ICON -->
+            <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6" [ngClass]="action.bg">
+                <i class="bi {{ action.icon }} text-2xl" [ngClass]="action.iconColor"></i>
+            </div>
+
+            <!-- CONTENT -->
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                {{ action.title }}
+            </h3>
+
+            <p class="text-sm text-gray-600 mb-6">
+                {{ action.description }}
+            </p>
+
+            <!-- ARROW -->
+            <div class="text-blue-600 font-medium flex items-center gap-2 cursor-pointer">
+                <span>Explore</span>
+                <i class="bi bi-arrow-right"></i>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-6 py-14 grid grid-cols-1 lg:grid-cols-3 gap-8 ">
+
+    <!-- LEFT: DISTRICT STATUS -->
+    <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+
+        <h2 class="text-xl font-semibold text-gray-900 mb-1">
+            District-wise Groundwater Status
+        </h2>
+        <p class="text-sm text-gray-500 mb-6">
+            Assessment categories based on latest GWRA data
+        </p>
+
+        <!-- District Rows -->
+        <div class="space-y-4">
+            <div *ngFor="let d of districts" class="flex items-center justify-between bg-gray-50 rounded-xl p-5">
+
+                <div class="flex items-start gap-4">
+                    <i class="bi bi-geo-alt text-gray-400 text-xl"></i>
+
+                    <div>
+                        <h3 class="font-semibold text-gray-900">
+                            {{ d.name }}
+                        </h3>
+                        <p class="text-sm font-medium" [ngClass]="d.statusColor">
+                            {{ d.status }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <i class="bi {{ d.trendIcon }} text-xl" [ngClass]="d.trendColor">
+                    </i>
+
+                    <a href="#" class="text-blue-600 font-medium flex items-center gap-1 hover:underline">
+                        View Details
+                        <i class="bi bi-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- View All -->
+        <div class="mt-6">
+            <button class="w-full py-3 rounded-xl border border-gray-300 text-gray-700
+               font-medium hover:bg-gray-100 flex items-center justify-center gap-2">
+                View All Districts
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- RIGHT: RECENT NOTICES -->
+    <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+
+        <h2 class="text-xl font-semibold text-gray-900 mb-1">
+            Recent Notices
+        </h2>
+        <p class="text-sm text-gray-500 mb-6">
+            Latest updates and announcements
+        </p>
+
+        <div class="space-y-6">
+            <div *ngFor="let n of notices">
+                <span class="inline-block px-3 py-1 text-xs rounded-full border  text-gray-700 mb-2">
+                    {{ n.type }}
+                </span>
+
+                <h3 class="font-semibold text-gray-900">
+                    {{ n.title }}
+                </h3>
+                <p class="text-sm text-gray-500 mt-1">
+                    {{ n.date }}
+                </p>
+
+                <hr class="mt-4" />
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <a href="#" class="text-blue-600 font-medium flex items-center justify-center gap-2 hover:underline">
+                View All Notices
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="max-w-7xl mx-auto px-6 py-14">
+
+    <div class="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm">
+        <h2 class="text-2xl font-semibold text-gray-900">
+            Contact Ground Water Department
+        </h2>
+        <p class="text-gray-500 mt-1 mb-8">
+            Reach out for assistance and queries
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            <div *ngFor="let c of contactCards" class="flex items-start gap-4">
+
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center" [ngClass]="c.bg">
+                    <i class="bi {{ c.icon }} text-xl" [ngClass]="c.iconColor"></i>
+                </div>
+
+                <div>
+                    <h3 class="font-semibold text-gray-900">
+                        {{ c.title }}
+                    </h3>
+                    <p class="text-blue-600 font-medium">
+                        {{ c.value }}
+                    </p>
+                    <p class="text-sm text-gray-500 mt-1">
+                        {{ c.subText }}
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</div>
+<footer class="bg-gradient-to-r from-slate-900 to-slate-800 text-gray-300 mt-20">
+    <div class="max-w-7xl mx-auto px-6 py-14 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+        <!-- BRAND -->
+        <div>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">
+                    <i class="bi bi-droplet-half text-white text-lg"></i>
+                </div>
+                <h3 class="text-white font-semibold text-lg">TG-GWRMS</h3>
+            </div>
+            <p class="text-sm text-gray-400 leading-relaxed">
+                Telangana Groundwater Resources Management System
+            </p>
+        </div>
+
+        <!-- QUICK LINKS -->
+        <div>
+            <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+            <ul class="space-y-2 text-sm">
+                <li *ngFor="let link of footerLinks.quick" class="hover:text-white cursor-pointer">
+                    {{ link }}
+                </li>
+            </ul>
+        </div>
+
+        <!-- RESOURCES -->
+        <div>
+            <h4 class="text-white font-semibold mb-4">Resources</h4>
+            <ul class="space-y-2 text-sm">
+                <li *ngFor="let res of footerLinks.resources" class="hover:text-white cursor-pointer">
+                    {{ res }}
+                </li>
+            </ul>
+        </div>
+
+        <!-- CONTACT -->
+        <div>
+            <h4 class="text-white font-semibold mb-4">Contact</h4>
+            <ul class="space-y-3 text-sm">
+                <li class="flex items-center gap-2">
+                    <i class="bi bi-telephone"></i>
+                    040-23111111
+                </li>
+                <li class="flex items-center gap-2">
+                    <i class="bi bi-envelope"></i>
+                    support@tggroundwater.gov.in
+                </li>
+                <li class="flex items-center gap-2">
+                    <i class="bi bi-geo-alt"></i>
+                    Jalasoudha, Errum Manzil<br />
+                    Hyderabad - 500082
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+    <div class="border-t border-gray-700 mt-10 pt-6 text-center text-sm text-gray-500">
+        © 2024 Government of Telangana. All rights reserved. | Ground Water Department
+    </div>
+</footer>
+
+
+
