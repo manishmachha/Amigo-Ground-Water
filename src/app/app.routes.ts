@@ -49,4 +49,9 @@ export const routes: Routes = [
   {path:'district-officer', component: DistrictOfficer},
   {path:'noc-applications', component:NocApplications},
   {path:'noc-dashboard', component:NocDashboard},
+   {
+    path: 'noc-application',
+    loadChildren: () =>
+      import('./noc-applications-details-module/noc-applications-details.routes').then((m) => m.NocApplicationRoutes),
+  },
 ];
