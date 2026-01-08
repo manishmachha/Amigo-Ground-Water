@@ -1,18 +1,20 @@
-export interface ContactCard {
-  name: string;
-  designation: string;
-  organization: string;
-  mobile: string;
+export interface ApplicantInfo {
+
+  fullName: string;
+  designation?: string
+  organization?: string;
+  mobileNumber: string;
   email: string;
-  address: string;
-}
 
-export interface BusinessInfo {
-  pan: string;
-  gst: string;
-}
+  idProofType?: string;
+  idProofNumber: string;
+  gstNumber?: string;
 
-export interface NocUiData {
-  contact: ContactCard;
-  business: BusinessInfo;
+  doorNumber?: string,
+  street?: string,
+  district?: string,
+  mandal?: string,
+  village?: string,
+  pinCode?: string,
+
 }

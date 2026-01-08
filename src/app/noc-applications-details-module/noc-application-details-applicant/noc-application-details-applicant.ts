@@ -1,26 +1,35 @@
-import { Component } from '@angular/core';
-import { NocUiData } from '../../models/noc-application-details-applicant-model';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { ApplicantInfo } from '../../models/noc-application-details-applicant-model';
+import { NocApplicationDetailsService } from '../../services/noc-application-details-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-noc-application-details-applicant',
-  imports: [],
   templateUrl: './noc-application-details-applicant.html',
   styleUrl: './noc-application-details-applicant.css',
+  imports:[CommonModule]
 })
-export class NocApplicationDetailsApplicant {
-data: NocUiData = {
-    contact: {
-      name: 'Mr. Rajesh Kumar',
-      designation: 'Managing Director',
-      organization: 'Green Valley Developers Pvt Ltd',
-      mobile: '+91 9876543210',
-      email: 'rajesh.kumar@greenvalley.com',
-      address: 'Plot 123, Gachibowli, Hyderabad, Telangana - 500032'
-    },
-    business: {
-      pan: 'ABCDE1234F',
-      gst: '36ABCDE1234F1Z5'
-    }
-  };
+export class NocApplicationDetailsApplicant implements OnInit {
 
+  applicantInfo = signal<ApplicantInfo []>([]);
+
+  nocApplicantInfo = inject(NocApplicationDetailsService);
+
+  ngOnInit(): void {
+    this.loadApplicantInfo();
+  }
+
+  loadApplicantInfo() {
+    const applicantId = '6e60aebc-ae10-4452-a599-e211ab54da2b';
+
+    this.nocApplicantInfo.nocApplicantDetails(applicantId).subscribe({
+      next: (res: any) => {
+        console.log('API response', res);
+        this.applicantInfo.set([res.data.applicant]); 
+      },
+      error: (err) => {
+        console.error('Failed To Load Applicant Data', err);
+      }
+    });
+  }
 }

@@ -1,11 +1,25 @@
-export interface StageInfo {
-  name: string;
-  progress: string;
-}
+export interface NocScreenData {
+  // Project Information
+  projectName: string;
+  projectCategory: string;
+  nocType: string;
+  projectStatus: string;
+  noOfFlats: number;
+  designPopulation: number;
 
-export interface OfficerInfo {
-  name: string;
-  dept: string;
+  // Location Details
+  district: string;
+  mandal: string;
+  villageTown: string;
+  surveyNumbers: string;
+  assessmentCategory: string;
+  watershed: string;
+
+}
+export interface GroundwaterRequirement {
+  type: string;
+  daily: number;
+  annual: number;
 }
 
 export interface Structure {
@@ -14,39 +28,8 @@ export interface Structure {
   badge: string;
 }
 
-export interface GroundwaterRow {
-  label: string;
-  daily: number;
-  annual: number;
-}
-
-export interface NocScreenData {
-  title: string;
-  status: string;
-  applicationId: string;
-  submittedOn: string;
-
-  project: GroundwaterRow[];
-
-  info: {
-    name: string;
-    category: string;
-    nocType: string;
-    projectStatus: string;
-    flats: number;
-    population: number;
-  };
-
-  location: {
-    district: string;
-    mandal: string;
-    village: string;
-    survey: string;
-    assessment: string;
-    watershed: string;
-  };
-
-  extraction: Structure[];
-  recharge: Structure[];
+export interface RechargeData {
+  structures: Structure[];
   piezometers: string;
 }
+

@@ -1,91 +1,77 @@
-<div class="space-y-6bg-white rounded-xl border border-gray-200 shadow-sm px-5 py-5">
+<div class="space-y-6 bg-white rounded-xl border border-gray-200 shadow-sm px-5 py-5"
+    *ngFor="let applicant of applicantInfo()">
 
-        <!-- Contact Information -->
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
-            <div class="px-6 py-4 border-b border-gray-300 text-base font-medium text-gray-900 flex items-center gap-2">
-                Contact Information
-            </div>
-
-            <div class="px-6 py-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                    <div>
-                        <p class="text-gray-500 text-xs flex items-center gap-2">
-                            <i class="bi bi-person text-indigo-500"></i> Name
-                        </p>
-                        <p class="font-medium text-gray-900 mt-1">{{ data.contact.name }}</p>
-                    </div>
-
-                    <div>
-                        <p class="text-gray-500 text-xs flex items-center gap-2">
-                            <i class="bi bi-briefcase text-indigo-500"></i> Designation
-                        </p>
-                        <p class="font-medium text-gray-900 mt-1">{{ data.contact.designation }}</p>
-                    </div>
-
-                    <div>
-                        <p class="text-gray-500 text-xs flex items-center gap-2">
-                            <i class="bi bi-building text-indigo-500"></i> Organization
-                        </p>
-                        <p class="font-medium text-gray-900 mt-1">{{ data.contact.organization }}</p>
-                    </div>
-
-                    <div>
-                        <p class="text-gray-500 text-xs flex items-center gap-2">
-                            <i class="bi bi-telephone text-indigo-500"></i> Mobile
-                        </p>
-                        <p class="font-medium text-gray-900 mt-1">{{ data.contact.mobile }}</p>
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <p class="text-gray-500 text-xs flex items-center gap-2">
-                            <i class="bi bi-envelope text-indigo-500"></i> Email
-                        </p>
-                        <p class="font-medium text-gray-900 mt-1">{{ data.contact.email }}</p>
-                    </div>
-
-                </div>
-            </div>
+    <!-- Contact Information -->
+    <div class="px-6 py-6 bg-white rounded-xl border border-gray-200 shadow-xl">
+        <div class="px-6 py-4 border-b border-gray-300 text-xl font-medium text-gray-900">
+            Contact Information
         </div>
 
-    <!-- ROW 2 -->
-    <div class="grid grid-cols-1 gap-6">
+        <div class="px-6 py-4 grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        <!-- Business Details -->
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
-            <div class="px-6 py-4 border-b border-gray-300 text-base font-medium text-gray-900 flex items-center gap-2">
-                Business Details
+            <div>
+                <p class="text-gray-500 text-sm">Name</p>
+                <p class="font-medium text-gray-900">{{ applicant.fullName }}</p>
             </div>
 
-            <div class="px-6 py-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-                <div>
-                    <p class="text-gray-500 text-xs">PAN Number</p>
-                    <p class="font-medium text-gray-900 mt-1">{{ data.business.pan }}</p>
-                </div>
-
-                <div>
-                    <p class="text-gray-500 text-xs">GST Number</p>
-                    <p class="font-medium text-gray-900 mt-1">{{ data.business.gst }}</p>
-                </div>
-
+            <div>
+                <p class="text-gray-500 text-sm">Designation</p>
+                <p class="font-medium text-gray-900">{{ applicant.designation }}</p>
             </div>
+
+            <div>
+                <p class="text-gray-500 text-sm">Organization</p>
+                <p class="font-medium text-gray-900">{{ applicant.organization }}</p>
+            </div>
+
+            <div>
+                <p class="text-gray-500 text-sm">Mobile</p>
+                <p class="font-medium text-gray-900">{{ applicant.mobileNumber }}</p>
+            </div>
+
+            <div class="md:col-span-2">
+                <p class="text-gray-500 text-sm">Email</p>
+                <p class="font-medium text-gray-900">{{ applicant.email }}</p>
+            </div>
+
         </div>
-
-
     </div>
 
-    <div class="bg-white rounded-xl border border-gray-200 shadow-sm">
-        <div class="px-6 py-4 border-b border-gray-300 text-base font-medium text-gray-900 flex items-center gap-2">
-            <i class="bi bi-geo-alt text-green-600 text-lg"></i>
+    <!-- Business Details -->
+    <div class="px-6 py-6 bg-white rounded-xl border border-gray-200 shadow-xl">
+        <div class="px-6 py-4 border-b border-gray-300 text-xl font-medium text-gray-900">
+            Business Details
+        </div>
+
+        <div class="px-6 py-4 grid grid-cols-2 gap-4">
+            <div>
+                <p class="text-gray-500 text-sm">{{ applicant.idProofType }}</p>
+                <p class="font-medium text-gray-900">{{ applicant.idProofNumber }}</p>
+            </div>
+
+            <div>
+                <p class="text-gray-500 text-sm">GST Number</p>
+                <p class="font-medium text-gray-900">{{ applicant.gstNumber }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Address -->
+    <div class="px-6py6
+     bg-white rounded-xl border border-gray-200 shadow-xl">
+        <div class="px-6 py-4 text-xl border-b border-gray-300 font-medium">
             Address
         </div>
 
-        <div class="px-6 py-4">
-            <p class="text-gray-900 text-sm break-words">
-                {{ data.contact.address }}
-            </p>
+        <div class="px-6 py-4 text-sm">
+            {{ applicant.doorNumber }},
+            {{ applicant.street }},
+            {{ applicant.village }},
+            {{ applicant.mandal }},
+            {{ applicant.district }} -
+            {{ applicant.pinCode }}
         </div>
     </div>
+
 
 </div>

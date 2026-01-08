@@ -13,5 +13,9 @@ export class NocApplicationDetailsService {
   nocApplicantDetails(id: string) {
     return this.http.get<any[]>(`${this.baseUrl}/${id}`);
   }
+
+  nocApplicationDetailsTimeline(id: string){
+    return this.http.get(`${this.baseUrl}/timeline/${id}`)
+  }
   
 }
