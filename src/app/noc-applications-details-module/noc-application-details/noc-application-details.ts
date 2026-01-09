@@ -20,17 +20,17 @@ export interface NocApplication {
   applicationNumber: string;
   createdAt: string;
 
- 
-   assignedTo?: AssignedTo; 
 
-    currentStage: string;
-    status: string;
+  assignedTo?: AssignedTo;
 
-    category?: string;
-    district: string;
+  currentStage: string;
+  status: string;
 
-    freshWaterDaily: string;
-    freshWaterAnnual: string;
+  category?: string;
+  district: string;
+
+  freshWaterDaily: string;
+  freshWaterAnnual: string;
 
 
 }
@@ -49,13 +49,13 @@ export class NocApplicationDetails implements OnInit {
   route = inject(ActivatedRoute);
 
   ngOnInit(): void {
-  const id = this.route.snapshot.paramMap.get('id');
-  console.log('Clicked Application ID:', id);
+    const id = this.route.snapshot.paramMap.get('id');
+    console.log('Clicked Application ID:', id);
 
-  if (id) {
-    this.loadApplicantData(id);
+    if (id) {
+      this.loadApplicantData(id);
+    }
   }
-}
 
   application: NocApplication = {
     id: '1',
@@ -64,15 +64,14 @@ export class NocApplicationDetails implements OnInit {
     applicationNumber: 'APP/2024/0235',
     createdAt: '10/2/2024',
 
-      currentStage: 'Field Investigation',
-      status: 'In Progress',
+    currentStage: 'Field Investigation',
+    status: 'In Progress',
 
-      category: 'Critical',
-      district: 'Hyderabad',
+    category: 'Critical',
+    district: 'Hyderabad',
 
-      freshWaterDaily: '168 m³',
-     freshWaterAnnual: '61.3K m³/year',
-
+    freshWaterDaily: '168 m³',
+    freshWaterAnnual: '61.3K m³/year',
   };
 
   loadApplicantData(id: string) {
@@ -81,7 +80,7 @@ export class NocApplicationDetails implements OnInit {
 
     this.nocApplicationDetails.nocApplicantDetails(id).subscribe({
       next: (res: any) => {
-        console.log('applicant response', res);
+        // console.log('applicant response', res);
         this.applicantData.set([res.data])
         console.log('applicant res:', this.applicantData());
       },

@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import {  OnInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { CitizenProfileService } from '../services/citizen-portal-service';
 import { AmigoFormComponent } from '@amigo/amigo-form-renderer';
 import { CommonModule } from '@angular/common';
@@ -17,10 +17,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class CitizenPortal implements OnInit {
 
-    searchText = '';
-  applications = signal<any[]> ( []);
-  grievances = signal<any[]> ([]);
-  document = signal<any[]> ([]);
+  searchText = '';
+  applications = signal<any[]>([]);
+  grievances = signal<any[]>([]);
+  document = signal<any[]>([]);
   showAllApplications = false;
   initialApplicationsCount = 3;
 
@@ -29,8 +29,6 @@ export class CitizenPortal implements OnInit {
 
   showAllDocuments = false;
   initialDocumentsCount = 3;
-
-
 
   CitizenPortaleService = inject(CitizenProfileService);
 
@@ -57,7 +55,7 @@ export class CitizenPortal implements OnInit {
       title: 'Report Violation',
       icon: 'bi-exclamation-triangle',
       bg: 'bg-orange-500',
-       routerLink: '/report-voilation'
+      routerLink: '/report-voilation'
     },
     {
       title: 'Submit Grievance',
@@ -67,30 +65,28 @@ export class CitizenPortal implements OnInit {
     }
   ];
 
-loadApplications() {
-  this.CitizenPortaleService.getMyApplications().subscribe({
-    next: (res: any) => {
-      console.log('application response', res);
+  loadApplications() {
+    this.CitizenPortaleService.getMyApplications().subscribe({
+      next: (res: any) => {
+        // console.log('application response', res);
+        this.applications.set(res.data);
+        console.log('Mapped applications:', this.applications);
+      },
+      error: (err) => {
+        console.error('Failed to load applications', err);
+      }
+    });
+  }
 
-      this.applications.set(res.data);
-
-      console.log('Mapped applications:', this.applications);
-    },
-    error: (err) => {
-      console.error('Failed to load applications', err);
-    }
-  });
-}
-
-visibleApplications() {
-  const list = this.applications();   
-  return this.showAllApplications
-    ? list
-    : list.slice(0, this.initialApplicationsCount);
-}
-toggleViewAll(){
-  this.showAllApplications = !this.showAllApplications
-}
+  visibleApplications() {
+    const list = this.applications();
+    return this.showAllApplications
+      ? list
+      : list.slice(0, this.initialApplicationsCount);
+  }
+  toggleViewAll() {
+    this.showAllApplications = !this.showAllApplications
+  }
 
   // applications = [
   //   {
@@ -147,34 +143,31 @@ toggleViewAll(){
   //   }
   // ];
 
-
   loadGrievances() {
-  this.CitizenPortaleService.getGrievances().subscribe({
-    next: (res: any) => {
-      console.log('grievances response', res);
+    this.CitizenPortaleService.getGrievances().subscribe({
+      next: (res: any) => {
+        // console.log('grievances response', res);
+        this.grievances.set(res.data);
+        console.log('Mapped grievances:', this.grievances);
+      },
+      error: (err) => {
+        console.error('Failed to load grievances', err);
+      }
+    });
+  }
 
-      this.grievances.set(res.data);
+  visibleGrievances() {
+    const list = this.grievances();
+    return this.showAllGrievances
+      ? list
+      : list.slice(0, this.initialGrievanceCount);
+  }
 
-      console.log('Mapped grievances:', this.grievances);
-    },
-    error: (err) => {
-      console.error('Failed to load grievances', err);
-    }
-  });
-}
+  grievanceViewAll() {
+    this.showAllGrievances = !this.showAllGrievances
+  }
 
-visibleGrievances() {
-  const list = this.grievances();   
-  return this.showAllGrievances
-    ? list
-    : list.slice(0, this.initialGrievanceCount);
-}
 
-grievanceViewAll(){
-  this.showAllGrievances = !this.showAllGrievances
-}
-
-  
   documents = [
     {
       name: 'NOC Application Form',
@@ -190,30 +183,37 @@ grievanceViewAll(){
     }
   ];
 
-  loadDocuments(){
+  loadDocuments() {
     this.CitizenPortaleService.getDocuments().subscribe({
-      next: (res: any) =>{
+      next: (res: any) => {
         // console.log('Document Response', res);
         this.document.set(res.data);
         console.log('Documents Res', this.document());
 
       },
-       error: (err) => {
-      console.error('Failed to load Documents', err);
-    }
+      error: (err) => {
+        console.error('Failed to load Documents', err);
+      }
     })
   }
 
   visibleDocuments() {
-  const list = this.document();   
-  return this.showAllDocuments
-    ? list
-    : list.slice(0, this.initialDocumentsCount);
-}
+    const list = this.document();
+    return this.showAllDocuments
+      ? list
+      : list.slice(0, this.initialDocumentsCount);
+  }
 
-documentViewAll(){
-  this.showAllDocuments = !this.showAllDocuments
-}
+  documentViewAll() {
+    this.showAllDocuments = !this.showAllDocuments
+  }
 
+  downloadDocument(doc: any) {
+    const link = document.createElement('a');
+    link.href = doc.url;              // file URL from API
+    link.download = doc.fileName || doc.name; // download name
+    link.target = '_blank';
+    link.click();
+  }
 
 }

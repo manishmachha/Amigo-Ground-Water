@@ -8,32 +8,32 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-noc-application-details-applicant',
   templateUrl: './noc-application-details-applicant.html',
   styleUrl: './noc-application-details-applicant.css',
-  imports:[CommonModule]
+  imports: [CommonModule]
 })
 export class NocApplicationDetailsApplicant implements OnInit {
 
-  applicantInfo = signal<ApplicantInfo []>([]);
+  applicantInfo = signal<ApplicantInfo[]>([]);
   route = inject(ActivatedRoute);
 
   nocApplicantInfo = inject(NocApplicationDetailsService);
 
   ngOnInit(): void {
-  const id = this.route.parent?.snapshot.paramMap.get('id');
-  console.log('Clicked Application ID:', id);
+    const id = this.route.parent?.snapshot.paramMap.get('id');
+    console.log('Clicked Application ID:', id);
 
-  if (id) {
-    this.loadApplicantInfo(id);
+    if (id) {
+      this.loadApplicantInfo(id);
+    }
   }
-}
-
 
   loadApplicantInfo(id: string) {
     // const applicantId = '6e60aebc-ae10-4452-a599-e211ab54da2b';
 
     this.nocApplicantInfo.nocApplicantDetails(id).subscribe({
       next: (res: any) => {
-        console.log('API response', res);
-        this.applicantInfo.set([res.data.applicant]); 
+        
+        this.applicantInfo.set([res.data.applicant]);
+        console.log('API response', this.applicantInfo());
       },
       error: (err) => {
         console.error('Failed To Load Applicant Data', err);
