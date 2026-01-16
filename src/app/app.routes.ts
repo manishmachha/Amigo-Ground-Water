@@ -18,6 +18,7 @@ import { DistrictOfficer } from './district-officer/district-officer';
 import { NocApplications } from './noc-applications/noc-applications';
 import { NocDashboard } from './noc-dashboard/noc-dashboard';
 import { DrillingLogEntry } from './drilling-log-entry/drilling-log-entry';
+import { Notifications } from './notifications/notifications';
 
 export const routes: Routes = [
   { path: '', loadChildren: () => import('./login/login.routes').then((m) => m.loginRoutes) },
@@ -61,4 +62,7 @@ export const routes: Routes = [
       import('./rig-owner-dashboard-module/rig-owner-dashboard-module.routes').then((m) => m.RigOwnerDashboardModuleRoutes),
   },
   {path : 'drilling-log', component: DrillingLogEntry},
+  {path : 'notifications', component: Notifications},
+  {path : 'district-dashboard', component: NocDashboard},
 ];
+

@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { NocApplicationDetailsService } from '../../services/noc-application-details-service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditNocDetails } from '../edit-noc-details/edit-noc-details';
 
 export interface Role {
   name: string;
@@ -38,7 +40,7 @@ export interface NocApplication {
   styleUrl: './noc-application-details.css',
 })
 export class NocApplicationDetails implements OnInit {
-  applicantData = signal<NocApplication[]>([]);
+  applicationData = signal<NocApplication[]>([]);
 
   nocApplicationDetails = inject(NocApplicationDetailsService);
   route = inject(ActivatedRoute);
@@ -48,7 +50,7 @@ export class NocApplicationDetails implements OnInit {
     console.log('Clicked Application ID:', id);
 
     if (id) {
-      this.loadApplicantData(id);
+      this.loadApplicationData(id);
     }
   }
 
@@ -69,15 +71,15 @@ export class NocApplicationDetails implements OnInit {
     freshWaterAnnual: '61.3K m³/year',
   };
 
-  loadApplicantData(id: string) {
+  loadApplicationData(id: string) {
     // const applicantId = "6e60aebc-ae10-4452-a599-e211ab54da2b"
 
     this.nocApplicationDetails.nocApplicantionDetails(id).subscribe({
       next: (res: any) => {
         console.log('applicant response', res);
-        this.applicantData.set([res.data]);
+        this.applicationData.set([res.data]);
         this.nocApplicationDetails.currentApplication.set(res.data);
-        console.log('applicant res:', this.applicantData());
+        console.log('applicant res:', this.applicationData());
       },
       error: (err) => {
         console.error('Failed to load applications', err);
@@ -85,7 +87,24 @@ export class NocApplicationDetails implements OnInit {
     });
   }
 
+  readonly dialog = inject(MatDialog);
+
   takeAction() {
     alert('Take Action Clicked');
+  }
+
+  openEditNocDialog() {
+    const data = this.applicationData()[0];
+    console.log('data', data.projectCategory);
+
+    if (!data) return;
+
+    this.dialog.open(EditNocDetails, {
+      width: '800px',
+      maxHeight: '90vh',
+      panelClass: 'custom-dialog-container',
+      autoFocus: false,
+      data: data,
+    });
   }
 }

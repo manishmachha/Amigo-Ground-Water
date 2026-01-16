@@ -1,0 +1,12 @@
+<div class="p-6 bg-white rounded-lg">
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-semibold text-gray-900">Update NOC Details</h2>
+        <button (click)="dialogRef.close()" class="text-gray-400 hover:text-gray-500">
+            <i class="bi bi-x-lg text-lg"></i>
+        </button>
+    </div>
+
+    <amigo-form [formId]="formId" [initialValue]="initialValues" (submitted)="onFormSubmitted($event)"
+        (submitFailed)="onFormSubmitFailed($event)">
+    </amigo-form>
+</div>

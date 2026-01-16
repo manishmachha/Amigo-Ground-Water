@@ -1,9 +1,48 @@
-<div class="bg-white rounded-2xl shadow p-6">
-  <h2 class="text-xl font-medium mb-4">Application Approval</h2>
-  <amigo-form 
-    [formId]="formId" 
-    [mode]="mode"
-    (submitted)="onFormSubmitted($event)"
-  ></amigo-form>
-  <!-- NOTE: Ensure the form has 'decision' (Select) and 'remarks' (Textarea) fields -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+  <!-- Approve Card -->
+  <div class="bg-white rounded-xl border border-green-200 shadow-sm p-6 hover:shadow-md transition-shadow">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+        <i class="bi bi-check-lg text-green-600 text-xl"></i>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900">Approve Application</h3>
+    </div>
+
+    <p class="text-sm text-gray-500 mb-4">
+      Review the application details and provide remarks for approval. This action will move the application to the next
+      stage.
+    </p>
+
+    <textarea [(ngModel)]="approveRemarks" placeholder="Enter approval remarks..."
+      class="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 resize-none mb-4 text-sm"></textarea>
+
+    <button (click)="performAction('APPROVE')" [disabled]="isProcessing || !approveRemarks.trim()"
+      class="w-full py-2.5 px-4 bg-green-600 hover:bg-green-700 disabled:bg-green-300 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+      <span *ngIf="isProcessing" class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></span>
+      <span>Approve Application</span>
+    </button>
+  </div>
+
+  <!-- Reject Card -->
+  <div class="bg-white rounded-xl border border-red-200 shadow-sm p-6 hover:shadow-md transition-shadow">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+        <i class="bi bi-x-lg text-red-600 text-xl"></i>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900">Reject Application</h3>
+    </div>
+
+    <p class="text-sm text-gray-500 mb-4">
+      If the application does not meet the requirements, provide specific reasons for rejection.
+    </p>
+
+    <textarea [(ngModel)]="rejectRemarks" placeholder="Enter rejection remarks..."
+      class="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 resize-none mb-4 text-sm"></textarea>
+
+    <button (click)="performAction('REJECT')" [disabled]="isProcessing || !rejectRemarks.trim()"
+      class="w-full py-2.5 px-4 bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+      <span *ngIf="isProcessing" class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></span>
+      <span>Reject Application</span>
+    </button>
+  </div>
 </div>
