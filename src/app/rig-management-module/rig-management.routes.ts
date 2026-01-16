@@ -7,6 +7,7 @@ import { RigManagementMovementTracking } from './rig-management-movement-trackin
 import { RigManagementDrillingLogs } from './rig-management-drilling-logs/rig-management-drilling-logs';
 import { RigManagementVoilationOffences } from './rig-management-voilation-offences/rig-management-voilation-offences';
 import { RigManagementComplianceRenewals } from './rig-management-compliance-renewals/rig-management-compliance-renewals';
+import { NewRegisterDrillingRig } from './new-register-drilling-rig/new-register-drilling-rig';
 
  export const rigManagementRoutes: Routes = [
   {
@@ -21,6 +22,7 @@ import { RigManagementComplianceRenewals } from './rig-management-compliance-ren
       { path: 'drilling', component: RigManagementDrillingLogs },
       { path: 'violation', component: RigManagementVoilationOffences },
       { path: 'compliance', component: RigManagementComplianceRenewals },
+      {path:'new-register-rig', component:NewRegisterDrillingRig},
 
     ],
   },

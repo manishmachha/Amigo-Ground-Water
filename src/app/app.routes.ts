@@ -54,4 +54,10 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./noc-applications-details-module/noc-applications-details.routes').then((m) => m.NocApplicationRoutes),
   },
+
+   {
+    path: 'rig-details',
+    loadChildren: () =>
+      import('./rig-details-module/rig-details-routes').then((m) => m.RigDetails),
+  },
 ];

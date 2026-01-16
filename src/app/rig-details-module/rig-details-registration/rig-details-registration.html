@@ -1,0 +1,122 @@
+<div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+  <h2 class="text-lg font-semibold mb-6">
+    Registration Details (Form-15)
+  </h2>
+
+  <div class="grid grid-cols-2 gap-y-6">
+    <div>
+      <p class="text-sm text-gray-500">Application Number</p>
+      <p class="font-medium">RIG-APP-2024-00456</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Registration Date</p>
+      <p class="font-medium">
+        {{ rig.registrationDate | date:'dd/MM/yyyy' }}
+      </p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Registration Fee</p>
+      <p class="font-medium">₹25,000</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Receipt Number</p>
+      <p class="font-medium">RCT-2024-00123</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Valid Until</p>
+      <p class="font-medium">
+        {{ rig.registrationExpiryDate || '—' }}
+      </p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Days Remaining</p>
+      <span
+        *ngIf="getDaysRemaining(rig.registrationExpiryDate) !== null"
+        class="inline-block mt-1 px-3 py-1 text-xs rounded-full bg-orange-100 text-orange-700">
+        {{ getDaysRemaining(rig.registrationExpiryDate) }} days
+      </span>
+      <span *ngIf="!rig.registrationExpiryDate">—</span>
+    </div>
+  </div>
+</div>
+<div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+  <h2 class="text-lg font-semibold mb-6">
+    Technical Specifications
+  </h2>
+
+  <div class="grid grid-cols-2 gap-y-6">
+    <div>
+      <p class="text-sm text-gray-500">Rig Type</p>
+      <p class="font-medium">{{ rig.rigType }}</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Make & Model</p>
+      <p class="font-medium">
+        {{ rig.make }} {{ rig.model }}
+      </p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Max Drilling Depth</p>
+      <p class="font-medium">{{ rig.capacity }}</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Borehole Diameter</p>
+      <p class="font-medium">{{ rig.drillingDiameter }}</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Engine Power</p>
+      <p class="font-medium">{{ rig.engineHorsepower }} HP</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Year of Manufacture</p>
+      <p class="font-medium">{{ rig.yearOfManufacture }}</p>
+    </div>
+
+    <div>
+      <p class="text-sm text-gray-500">Engine Serial Number</p>
+      <p class="font-medium">ENG-2023-AC-45678</p>
+    </div>
+  </div>
+</div>
+<div class="bg-white rounded-xl shadow-sm p-6">
+  <h2 class="text-lg font-semibold mb-6">
+    Registered Documents
+  </h2>
+
+  <div *ngFor="let doc of rig.documents"
+       class="flex items-center justify-between py-4 border-b last:border-b-0">
+
+    <div class="flex items-center gap-3">
+      <i class="bi bi-file-earmark-text text-gray-500 text-xl"></i>
+      <div>
+        <p class="font-medium">{{ doc.name }}</p>
+        <p class="text-sm text-gray-500">
+          Uploaded: {{ doc.createdAt | date:'dd/MM/yyyy' }}
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <span
+        *ngIf="doc.isVerified"
+        class="px-3 py-1 text-xs rounded-full bg-green-100 text-green-700">
+        Verified
+      </span>
+
+      <a [href]="doc.url" target="_blank"
+         class="text-gray-600 hover:text-black">
+        <i class="bi bi-download text-lg"></i>
+      </a>
+    </div>
+  </div>
+</div>
