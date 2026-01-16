@@ -15,7 +15,7 @@ type LoginMode = 'password' | 'otp';
   imports: [AmigoFormComponent],
 })
 export class Login {
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   formId = 'e3346c85-4745-4a9e-9d9f-b4238cbb0778';
   acl = inject(AccessControlService);
@@ -49,7 +49,6 @@ export class Login {
       }
     }
   }
-
 
   onFormSubmitFailed(err: any) {
     console.error('submit failed:', err);

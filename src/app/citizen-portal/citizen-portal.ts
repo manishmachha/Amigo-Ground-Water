@@ -1,12 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { OnInit } from '@angular/core';
 import { CitizenProfileService } from '../services/citizen-portal-service';
 import { AmigoFormComponent } from '@amigo/amigo-form-renderer';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 
 @Component({
   selector: 'app-citizen-portal',
@@ -24,13 +23,14 @@ export class CitizenPortal implements OnInit {
   showAllApplications = false;
   initialApplicationsCount = 3;
 
-  showAllGrievances = false
+  showAllGrievances = false;
   initialGrievanceCount = 4;
 
   showAllDocuments = false;
   initialDocumentsCount = 3;
 
   CitizenPortaleService = inject(CitizenProfileService);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.loadApplications();
@@ -43,13 +43,13 @@ export class CitizenPortal implements OnInit {
       title: 'Apply for NOC',
       icon: 'bi-file-earmark-text',
       bg: 'bg-blue-500',
-      routerLink: '/noc-apply'
+      routerLink: '/noc-apply',
     },
     {
       title: 'Register Well',
       icon: 'bi-droplet',
       bg: 'bg-cyan-500',
-      routerLink: '/well-register'
+      routerLink: '/well-register',
     },
     {
       title: 'Report Violation',
@@ -61,43 +61,56 @@ export class CitizenPortal implements OnInit {
       title: 'Submit Grievance',
       icon: 'bi-chat-dots',
       bg: 'bg-purple-500',
-      routerLink: '/submit-greviance'
-    }
+      routerLink: '/submit-greviance',
+    },
   ];
 
   loadApplications() {
     this.CitizenPortaleService.getMyApplications().subscribe({
       next: (res: any) => {
-        // console.log('application response', res);
-        this.applications.set(res.data);
-        console.log('Mapped applications:', this.applications);
+        // res.data is expected to be the array of applications based on standard API response structure
+        const apps = res.data || [];
+        const mappedApps = apps.map((app: any) => ({
+          title: app.projectName || 'NOC Application',
+          appId: app.applicationNumber,
+          submittedOn: app.submittedAt ? new Date(app.submittedAt).toLocaleDateString() : 'Draft',
+          stage: app.currentStage || 'Draft',
+          status: app.status,
+          statusColor: this.getStatusColor(app.status),
+          icon: 'bi-file-earmark-text',
+          // Add ID for navigation
+          id: app.id,
+        }));
+
+        this.applications.set(mappedApps);
       },
       error: (err) => {
         console.error('Failed to load applications', err);
-      }
+      },
     });
+  }
+
+  getStatusColor(status: string): string {
+    switch (status) {
+      case 'Approved':
+        return 'bg-green-100 text-green-700 border-green-300';
+      case 'Rejected':
+        return 'bg-red-100 text-red-700 border-red-300';
+      case 'Draft':
+        return 'bg-gray-100 text-gray-700 border-gray-300';
+      default:
+        return 'bg-yellow-100 text-yellow-700 border-yellow-300';
+    }
   }
 
   visibleApplications() {
     const list = this.applications();
-    return this.showAllApplications
-      ? list
-      : list.slice(0, this.initialApplicationsCount);
-  }
-  toggleViewAll() {
-    this.showAllApplications = !this.showAllApplications
+    return this.showAllApplications ? list : list.slice(0, this.initialApplicationsCount);
   }
 
-  // applications = [
-  //   {
-  //     title: 'NOC Application',
-  //     appId: 'APP-NOC-2024-1234',
-  //     submittedOn: '15/1/2024',
-  //     stage: 'Technical Review',
-  //     status: 'Under Review',
-  //     statusColor: 'bg-yellow-100 text-yellow-700 border-yellow-300',
-  //     icon: 'bi-clock'
-  //   },
+  toggleViewAll() {
+    this.showAllApplications = !this.showAllApplications;
+  }
   //   {
   //     title: 'Well Registration',
   //     appId: 'APP-WELL-2023-8765',
@@ -112,16 +125,16 @@ export class CitizenPortal implements OnInit {
   notifications = [
     {
       message: 'Your NOC application is under technical review',
-      time: '2 hours ago'
+      time: '2 hours ago',
     },
     {
       message: 'Document verification completed successfully',
-      time: '1 day ago'
+      time: '1 day ago',
     },
     {
       message: 'Please submit missing documents for application APP-NOC-2024-1234',
-      time: '2 days ago'
-    }
+      time: '2 days ago',
+    },
   ];
 
   // grievances = [
@@ -146,41 +159,40 @@ export class CitizenPortal implements OnInit {
   loadGrievances() {
     this.CitizenPortaleService.getGrievances().subscribe({
       next: (res: any) => {
-        // console.log('grievances response', res);
+        console.log('grievances response', res);
+
         this.grievances.set(res.data);
+
         console.log('Mapped grievances:', this.grievances);
       },
       error: (err) => {
         console.error('Failed to load grievances', err);
-      }
+      },
     });
   }
 
   visibleGrievances() {
     const list = this.grievances();
-    return this.showAllGrievances
-      ? list
-      : list.slice(0, this.initialGrievanceCount);
+    return this.showAllGrievances ? list : list.slice(0, this.initialGrievanceCount);
   }
 
   grievanceViewAll() {
-    this.showAllGrievances = !this.showAllGrievances
+    this.showAllGrievances = !this.showAllGrievances;
   }
-
 
   documents = [
     {
       name: 'NOC Application Form',
-      date: 'Uploaded · 15/1/2024'
+      date: 'Uploaded · 15/1/2024',
     },
     {
       name: 'Well Registration Certificate',
-      date: 'Issued · 25/12/2023'
+      date: 'Issued · 25/12/2023',
     },
     {
       name: 'Property Documents',
-      date: 'Uploaded · 14/1/2024'
-    }
+      date: 'Uploaded · 14/1/2024',
+    },
   ];
 
   loadDocuments() {
@@ -189,12 +201,11 @@ export class CitizenPortal implements OnInit {
         // console.log('Document Response', res);
         this.document.set(res.data);
         console.log('Documents Res', this.document());
-
       },
       error: (err) => {
         console.error('Failed to load Documents', err);
-      }
-    })
+      },
+    });
   }
 
   visibleDocuments() {
@@ -216,4 +227,9 @@ export class CitizenPortal implements OnInit {
     link.click();
   }
 
+  openApplication(app: any) {
+    if (app.id) {
+      this.router.navigate(['/noc-application', app.id]);
+    }
+  }
 }

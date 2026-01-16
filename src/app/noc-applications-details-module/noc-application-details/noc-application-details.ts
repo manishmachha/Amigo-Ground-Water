@@ -13,13 +13,11 @@ export interface AssignedTo {
 }
 
 export interface NocApplication {
-
   id: string;
   projectName: string;
   projectCategory: string;
   applicationNumber: string;
   createdAt: string;
-
 
   assignedTo?: AssignedTo;
 
@@ -31,8 +29,6 @@ export interface NocApplication {
 
   freshWaterDaily: string;
   freshWaterAnnual: string;
-
-
 }
 
 @Component({
@@ -42,7 +38,6 @@ export interface NocApplication {
   styleUrl: './noc-application-details.css',
 })
 export class NocApplicationDetails implements OnInit {
-
   applicantData = signal<NocApplication[]>([]);
 
   nocApplicationDetails = inject(NocApplicationDetailsService);
@@ -75,23 +70,22 @@ export class NocApplicationDetails implements OnInit {
   };
 
   loadApplicantData(id: string) {
-
     // const applicantId = "6e60aebc-ae10-4452-a599-e211ab54da2b"
 
-    this.nocApplicationDetails.nocApplicantDetails(id).subscribe({
+    this.nocApplicationDetails.nocApplicantionDetails(id).subscribe({
       next: (res: any) => {
-        // console.log('applicant response', res);
-        this.applicantData.set([res.data])
+        console.log('applicant response', res);
+        this.applicantData.set([res.data]);
+        this.nocApplicationDetails.currentApplication.set(res.data);
         console.log('applicant res:', this.applicantData());
       },
       error: (err) => {
         console.error('Failed to load applications', err);
-      }
+      },
     });
   }
 
   takeAction() {
     alert('Take Action Clicked');
   }
-
 }
