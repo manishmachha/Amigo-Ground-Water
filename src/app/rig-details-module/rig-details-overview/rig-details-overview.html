@@ -1,0 +1,63 @@
+<div class="grid grid-cols-3 gap-6">
+
+  <!-- Rig Info -->
+  <div class="bg-white rounded-xl shadow-sm p-5">
+    <h3 class="font-medium mb-4">Rig Information</h3>
+
+    <p class="text-sm mb-2">
+      <span class="text-gray-500">Registration No:</span>
+      <span class="font-medium">{{ rig.registrationNumber }}</span>
+    </p>
+
+    <p class="text-sm mb-2">
+      <span class="text-gray-500">Type:</span>
+      <span class="font-medium">{{ rig.rigType }}</span>
+    </p>
+
+    <p class="text-sm mb-2">
+      <span class="text-gray-500">Make & Model:</span>
+      <span class="font-medium">{{ rig.make }} {{ rig.model }}</span>
+    </p>
+
+    <p class="text-sm mb-2">
+      <span class="text-gray-500">Capacity:</span>
+      <span class="font-medium">{{ rig.capacity }}</span>
+    </p>
+
+    <p class="text-sm">
+      <span class="text-gray-500">Year:</span>
+      <span class="font-medium">{{ rig.yearOfManufacture }}</span>
+    </p>
+  </div>
+
+  <!-- Location -->
+  <div class="bg-white rounded-xl shadow-sm p-5">
+    <h3 class="font-medium mb-4">Current Location</h3>
+
+    <p class="font-medium">{{ rig.currentVillage }}</p>
+    <p class="text-sm text-gray-500">
+      {{ rig.currentMandal }}, {{ rig.currentDistrict }}
+    </p>
+
+    <p class="text-xs text-gray-400 mt-2">
+      Lat: {{ rig.currentLatitude }} |
+      Long: {{ rig.currentLongitude }}
+    </p>
+  </div>
+
+  <!-- Activity -->
+  <div class="bg-white rounded-xl shadow-sm p-5">
+    <h3 class="font-medium mb-4">Current Activity</h3>
+
+    <span
+      class="inline-block px-3 py-1 text-xs rounded-full bg-green-100 text-green-700">
+      {{ rig.operationalStatus }}
+    </span>
+
+    <p class="text-sm mt-3">
+      <span class="text-gray-500">Total Wells:</span>
+      <span class="font-medium">{{ rig.totalWellsDrilled }}</span>
+    </p>
+  </div>
+
+</div>

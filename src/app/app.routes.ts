@@ -165,4 +165,10 @@ export const routes: Routes = [
     loadComponent: () => import('./notifications/notifications').then((m) => m.Notifications),
     data: { title: 'Notifications', description: 'Manage your alerts and updates' },
   },
+
+   {
+    path: 'rig-details',
+    loadChildren: () =>
+      import('./rig-details-module/rig-details-routes').then((m) => m.RigDetails),
+  },
 ];
